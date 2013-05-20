@@ -1,4 +1,14 @@
 {
+	"name": "janrain/plex",
+	"version": "0.1.0",
+	"require": {
+		"php": ">5.3.0"
+	},
+	"autoload": {
+		"psr-0": {
+			"janrain": "lib/"
+		}
+	},
 	"require-dev": {
 		"phpunit/phpunit": "3.7.*"
 	}
