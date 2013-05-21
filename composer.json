@@ -1,5 +1,7 @@
 {
 	"name": "janrain/plex",
+	"type": "library",
+	"license": "Apache-2.0",
 	"version": "0.1.0",
 	"require": {
 		"php": ">5.3.0"
