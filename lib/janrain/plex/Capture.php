@@ -3,13 +3,8 @@ namespace janrain\plex;
 
 class Capture implements RenderableInterface {
 
-    public static $REQ_OPTS = array('tokenUrl', 'capture.appId', 'capture.clientId', 'capture.captureServer', 'capture.loadJsUrl');
-
 	public function __construct(CaptureConfigInterface $config) {
-        foreach (static::$REQ_OPTS as $key) {
-            if (empty($config[$key])) {
-                throw new \InvalidArgumentException("Required configuration option {$key} not found!");
-            }
+        foreach (CaptureConfigInterface::getRequiredKeys() as $key) {
             $this->{$key} = $config[$key];
         }
 	}
@@ -21,27 +16,28 @@ class Capture implements RenderableInterface {
 	public function getStartHeadJs() {
 		$out = "(function(){
             window.janrain = { settings: { packages: [], capture: {}}};
-			/*if (typeof window.janrain !== 'object') window.janrain = {};
-			if (typeof window.janrain.settings !== 'object') window.janrain.settings = {};
-			if (typeof window.janrain.settings.packages !== 'object') window.janrain.settings.packages = [];
-			if (typeof window.janrain.settings.capture !== 'object') window.janrain.settings.capture = {};*/
-            janrain.settings.packages.push('capture');\n";
+			// if (typeof window.janrain !== 'object') window.janrain = {};
+			// if (typeof window.janrain.settings !== 'object') window.janrain.settings = {};
+			// if (typeof window.janrain.settings.packages !== 'object') window.janrain.settings.packages = [];
+			// if (typeof window.janrain.settings.capture !== 'object') window.janrain.settings.capture = {};
+            // janrain.settings.packages.push('capture');\n";
 		return $out;
 	}
 
 	public function getSettingsHeadJs() {
 		$out = "\n//Start Janrain Settings
             var captureOpts = janrain.settings.capture;
-			captureOpts.appId = '{$this->{capture.appId}}';
-			captureOpts.clientId = '{$this->{capture.clientId}}';
-			captureOpts.captureServer = 'https://{$this->captureName}.janraincapture.com';
+			captureOpts.appId = '{$this->{'capture.appId'}}';
+			captureOpts.clientId = '{$this->{'capture.clientId'}}';
+			captureOpts.captureServer = '{$this->{'capture.captureServer'}}';
 			captureOpts.recaptchaPublicKey = '6LeVKb4SAAAAAGv-hg5i6gtiOV4XrLuCDsJOnYoP';
 			captureOpts.redirectUri = document.location.href;
-			captureOpts.loadJsUrl = 'd16s8pqtk4uodx.cloudfront.net/{$this->engageName}/load.js';
+			//captureOpts.loadJsUrl = 'd16s8pqtk4uodx.cloudfront.net/\$this->engageName/load.js';
+            captureOpts.loadJsUrl = '{$this->{'capture.loadJsUrl'}}';
 			captureOpts.flowName = 'plugins';
 			captureOpts.registerFlow = 'socialRegistration';
 			captureOpts.responseType = 'token';
-			janrain.settings.tokenUrl = '{$this->tokenUrl}';
+			janrain.settings.tokenUrl = '{$this->{'tokenUrl'}}';
 			janrain.settings.tokenAction = 'event';
 			//End Janrain Settings\n";
 		return $out;
@@ -58,7 +54,7 @@ class Capture implements RenderableInterface {
 			var e = document.createElement('script');
 			e.type = 'text/javascript';
 			e.id = 'janrainAuthWidget';
-			e.src = '//d16s8pqtk4uodx.cloudfront.net/{$this->engageName}/load.js';
+			e.src = '//{$this->{'capture.loadJsUrl'}}';
 			var s = document.getElementsByTagName('script')[0];
 			s.parentNode.insertBefore(e, s);
 			})();

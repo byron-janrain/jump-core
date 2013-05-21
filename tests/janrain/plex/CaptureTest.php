@@ -6,10 +6,13 @@ use \PHPUnit_Framework_TestCase;
 class CaptureTest extends PHPUnit_Framework_TestCase
 {
 	protected $config;
+	protected $capture;
 
 	public function setUp() {
-		$this->config = new CaptureConfig();
-		foreach (Capture::$REQ_OPTS as $key) {
+
+		$this->config = $this->getMockBuilder(__NAMESPACE__ . '\CaptureConfigInterface')
+			->getMock();
+		foreach (\janrain\plex\CaptureConfig::getRequiredKeys() as $key) {
 			$this->config[$key] = "1";
 		}
 		$this->capture = new Capture($this->config);
@@ -49,5 +52,13 @@ class CaptureTest extends PHPUnit_Framework_TestCase
 
 	public function testGetCssHrefsReturnsArray() {
 		$this->assertInternalType('array', $this->capture->getCssHrefs());
+	}
+
+	public function testGetCssReturnsString() {
+		$this->assertInternalType('string', $this->capture->getCss());
+	}
+
+	public function testGetHtmlReturnsString() {
+		$this->assertInternalType('string', $this->capture->getHtml());
 	}
 }
