@@ -1,6 +1,9 @@
 <?php
 namespace janrain\plex;
 
+/**
+ * This interface represents the pre-render contract for all Plex features.
+ */
 interface RenderableInterface {
 	/**
 	 * Start the JS Output

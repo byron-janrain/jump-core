@@ -12,9 +12,6 @@ class CaptureTest extends PHPUnit_Framework_TestCase
 
 		$this->config = $this->getMockBuilder(__NAMESPACE__ . '\CaptureConfigInterface')
 			->getMock();
-		foreach (\janrain\plex\CaptureConfig::getRequiredKeys() as $key) {
-			$this->config[$key] = "1";
-		}
 		$this->capture = new Capture($this->config);
 	}
 
@@ -24,15 +21,6 @@ class CaptureTest extends PHPUnit_Framework_TestCase
 	public function testInitNoConfig() {
 		$capture = new Capture();
 	}
-
-	/**
-	 * @expectedException InvalidArgumentException
-	 */
-	public function testInitInvalidConfig() {
-		$config = $this->getMockBuilder(__NAMESPACE__ . '\CaptureConfigInterface')->getMock();
-		$capture = new Capture($config);
-	}
-
 
 	public function testGetJsSrcsReturnsArray() {
 		$this->assertInternalType('array', $this->capture->getJsSrcs());
