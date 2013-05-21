@@ -2,6 +2,7 @@
 spl_autoload_register(
 	function ($className) {
 		if ('janrain' == strstr($className, '\\', true)) {
-			require_once dirname(__DIR__) . '/' . str_replace('\\', '/', $className) . '.php';
+			$className = str_replace('\\', '/', $className);
+			require_once dirname(dirname(__DIR__)) . "/{$className}.php";
 		}
 	}, true, true);
