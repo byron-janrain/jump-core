@@ -26,17 +26,16 @@ class Capture implements RenderableInterface {
 
 	public function getSettingsHeadJs() {
 		$out = "\n//Start Janrain Settings
-            var captureOpts = janrain.settings.capture;
-			captureOpts.appId = '{$this->config['capture.appId']}';
-			captureOpts.clientId = '{$this->config['capture.clientId']}';
-			captureOpts.captureServer = '{$this->config['capture.captureServer']}';
-			captureOpts.recaptchaPublicKey = '6LeVKb4SAAAAAGv-hg5i6gtiOV4XrLuCDsJOnYoP';
-			captureOpts.redirectUri = document.location.href;
-			//captureOpts.loadJsUrl = 'd16s8pqtk4uodx.cloudfront.net/\$this->engageName/load.js';
-            captureOpts.loadJsUrl = '{$this->config['capture.loadJsUrl']}';
-			captureOpts.flowName = 'plugins';
-			captureOpts.registerFlow = 'socialRegistration';
-			captureOpts.responseType = 'token';
+			janrain.settings.capture.appId = '{$this->config['capture.appId']}';
+			janrain.settings.capture.clientId = '{$this->config['capture.clientId']}';
+			janrain.settings.capture.captureServer = '{$this->config['capture.captureServer']}';
+			janrain.settings.capture.recaptchaPublicKey = '6LeVKb4SAAAAAGv-hg5i6gtiOV4XrLuCDsJOnYoP';
+			janrain.settings.capture.redirectUri = document.location.href;
+			//janrain.settings.capture.loadJsUrl = 'd16s8pqtk4uodx.cloudfront.net/\$this->engageName/load.js';
+            janrain.settings.capture.loadJsUrl = '{$this->config['capture.loadJsUrl']}';
+			janrain.settings.capture.flowName = 'plugins';
+			janrain.settings.capture.registerFlow = 'socialRegistration';
+			janrain.settings.capture.responseType = 'token';
 			janrain.settings.tokenUrl = '{$this->config['tokenUrl']}';
 			janrain.settings.tokenAction = 'event';
 			//End Janrain Settings\n";
