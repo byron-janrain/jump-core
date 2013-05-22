@@ -20,7 +20,7 @@ class Capture implements RenderableInterface {
 			// if (typeof window.janrain.settings !== 'object') window.janrain.settings = {};
 			// if (typeof window.janrain.settings.packages !== 'object') window.janrain.settings.packages = [];
 			// if (typeof window.janrain.settings.capture !== 'object') window.janrain.settings.capture = {};
-            // janrain.settings.packages.push('capture');\n";
+            janrain.settings.packages.push('capture');\n";
 		return $out;
 	}
 
@@ -76,7 +76,7 @@ class Capture implements RenderableInterface {
                         console.log('Registration Success!');
                         janrain.capture.ui.modal.close();
                     });
-				janrain.capture.ui.start();				
+				janrain.capture.ui.start();
  			}\n";
 		return $out;
 	}
