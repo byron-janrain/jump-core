@@ -136,8 +136,8 @@ class Capture implements RenderableInterface
     public function getCssHrefs()
     {
         return array(
-            '//d3hmp0045zy3cs.cloudfront.net/2.1.10/quilt.css',
-            '//d3hmp0045zy3cs.cloudfront.net/2.1.10/widgets.css',
+            #'//d3hmp0045zy3cs.cloudfront.net/2.1.10/quilt.css',
+            #'//d3hmp0045zy3cs.cloudfront.net/2.1.10/widgets.css',
             );
     }
 
