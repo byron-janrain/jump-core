@@ -1,9 +1,14 @@
 <?php
 namespace janrain\plex;
+
+use \ArrayObject;
 /**
- * 
+ * @abstract
+ * A plex config partial implementation that requires the necessary interfaces and provides
+ * a constructor that checks for necessary keys.  Subclasses need only pass a required params
+ * array to parent::__construct to validate check for option existence.
  */
-abstract class AbstractConfig extends \ArrayObject implements ConfigInterface
+abstract class AbstractConfig extends ArrayObject implements ConfigInterface
 {
 	public function __construct(Array $data, Array &$required)
 	{

@@ -2,10 +2,12 @@
     <div class='capture_header'>
         <h1>Sign Up / Sign In</h1>
     </div>
+    <?php if (false):?>
     <div class='capture_signin'>
         <h2>With your existing account from...</h2>
         {* loginWidget *} <br />
     </div>
+    <?php endif;?>
     <div class='capture_backgroundColor'>
         <div class='capture_signin'>
             <h2>With a traditional account...</h2>
@@ -19,7 +21,7 @@
         </div>
     </div>
 </div>
-
+<?php if (false):?>
 <div style='display:none;' id='returnSocial'>
     <div class='capture_header'>
         <h1>Sign Up / Sign In</h1>
@@ -30,6 +32,7 @@
         <div class='capture_centerText switchLink'><a href='#' data-cancelcapturereturnexperience='true'>Use another account</a></div>
     </div>
 </div>
+<?php endif;?>
 <div style='display:none;' id='returnTraditional'>
     <div class='capture_header'>
         <h1>Sign Up / Sign In</h1>

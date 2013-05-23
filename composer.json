@@ -18,7 +18,8 @@
 	},
 	"scripts": {
 		"post-install-cmd": [
-			"./vendor/bin/apigen.php  --source ./lib --destination docs --php no"
+			"./vendor/bin/apigen.php  --source ./lib --destination docs --php no",
+			"./vendor/bin/phpunit --coverage-html coverage"
 		]
 	}
 }
