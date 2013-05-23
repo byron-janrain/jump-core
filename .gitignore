@@ -4,3 +4,4 @@ composer.phar
 /vendor/
 autoload.php
 /coverage/
+/docs/

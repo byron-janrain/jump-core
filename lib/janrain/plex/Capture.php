@@ -10,11 +10,17 @@ class Capture implements RenderableInterface
         $this->config = $config;
     }
 
-    public function getJsSrcs()
+    /**
+     * {@inheritdoc}
+     */
+    public function getHeadJsSrcs()
     {
-        return array();//'https://d7v0k4dt27zlp.cloudfront.net/assets/capture_client.js');
+        return array();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getStartHeadJs()
     {
         $out = "(function(){
@@ -48,9 +54,9 @@ class Capture implements RenderableInterface
                         while (k < len) {
                             var kValue, mappedValue;
                             if (k in O) {
-                                kValue = O[ k ];
+                                kValue = O[k];
                                 mappedValue = callback.call(T, kValue, k, O);
-                                A[ k ] = mappedValue;
+                                A[k] = mappedValue;
                             }
                             k++;
                         }
@@ -61,6 +67,9 @@ class Capture implements RenderableInterface
         return $out;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getSettingsHeadJs()
     {
         $out = "\n//Start Janrain Settings
@@ -69,18 +78,19 @@ class Capture implements RenderableInterface
             opts.capture.captureServer = '{$this->config['capture.captureServer']}';
             opts.capture.recaptchaPublicKey = '6LeVKb4SAAAAAGv-hg5i6gtiOV4XrLuCDsJOnYoP';
             opts.capture.redirectUri = document.location.href;
-            //opts.capture.loadJsUrl = 'd16s8pqtk4uodx.cloudfront.net/\$this->engageName/load.js';
-            //opts.capture.loadJsUrl = '{$this->config['capture.loadJsUrl']}';
             opts.capture.loadJsUrl = 'd16s8pqtk4uodx.cloudfront.net/default/load.js';
             opts.capture.flowName = 'plugins';
-            opts.capture.registerFlow = 'signIn';
             opts.capture.responseType = 'token';
-            opts.tokenUrl = document.location.href;//'{$this->config['tokenUrl']}';
+            /*TODO: remove by default.  allow engage to set this if it needs it.*/
+            opts.tokenUrl = document.location.href;
             opts.tokenAction = 'event';
             //End Janrain Settings\n";
         return $out;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getEndHeadJs()
     {
         $out =
@@ -120,6 +130,9 @@ class Capture implements RenderableInterface
         return $out;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getCssHrefs()
     {
         return array(
@@ -128,14 +141,23 @@ class Capture implements RenderableInterface
             );
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getCss()
     {
-        return file_get_contents(__DIR__ . '/../plex/styles.css');
+        return file_get_contents(dirname(__DIR__) . '/plex/styles.css');
     }
 
+    /**
+     * @todo: remove screens when widget manager delivers them in the flow
+     * {@inheritdoc}
+     */
     public function getHtml()
     {
-        $screens = file_get_contents(__DIR__ . '/../plex/screens.html');
+        ob_start();
+        require dirname(__DIR__) . '/plex/screens.html';
+        $screens = ob_get_clean();
         return "<a href='#' class='capture_modal_open'>Sign In</a>\n{$screens}\n";
     }
 }
