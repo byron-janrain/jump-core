@@ -22,8 +22,8 @@ class CaptureTest extends PHPUnit_Framework_TestCase
 		$capture = new Capture();
 	}
 
-	public function testGetJsSrcsReturnsArray() {
-		$this->assertInternalType('array', $this->capture->getJsSrcs());
+	public function testGetHeadJsSrcsReturnsArray() {
+		$this->assertInternalType('array', $this->capture->getHeadJsSrcs());
 	}
 
 	public function testGetStartHeadJsReturnsString() {
