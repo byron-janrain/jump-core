@@ -110,7 +110,9 @@ class Capture implements RenderableInterface
 			function janrainCaptureWidgetOnLoad() {
 				janrain.events.onCaptureLoginSuccess.addHandler(
 					function (result) {
-						alert('Success: this is your token ' + result.accessToken);
+						console.log(result);
+						alert('Success: this is your token ' + result.accessToken + '\\nUUID:' + result.userData.uuid);
+						window.location.href = '{$this->config['jumpUrl']}?token=' + result.accessToken + '&uuid=' + result.userData.uuid;
 						janrain.capture.ui.modal.close();
 					});
 				janrain.events.onCaptureLoginFailed.addHandler(
