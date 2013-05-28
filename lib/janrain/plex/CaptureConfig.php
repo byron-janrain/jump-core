@@ -5,7 +5,7 @@ class CaptureConfig extends AbstractConfig implements CaptureConfigInterface
 {
 	public function __construct(Array $data)
 	{
-		static $REQ_KEYS = array('capture.appId', 'capture.clientId', 'capture.captureServer', 'capture.loadJsUrl', 'jumpUrl');
+		static $REQ_KEYS = array('capture.appId', 'capture.clientId', 'capture.captureServer', 'jumpUrl');
 		parent::__construct($data, $REQ_KEYS);
 	}
 
@@ -19,13 +19,13 @@ class CaptureConfig extends AbstractConfig implements CaptureConfigInterface
 		$this['capture.clientId'] = $id;
 	}
 
-	public function setCaptuerCaptureServer($url)
+	public function setCaptureCaptureServer($url)
 	{
 		$this['capture.captureServer'] = $url;
 	}
 
-	public function setCaptureLoadJsUrl($url)
+	public function setJumpUrl($url)
 	{
-		$this['capture.loadJsUrl'] = $url;
+		$this['jumpUrl'] = $url;
 	}
 }
