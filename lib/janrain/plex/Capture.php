@@ -78,7 +78,7 @@ class Capture implements RenderableInterface
 			opts.capture.captureServer = '{$this->config['capture.captureServer']}';
 			opts.capture.recaptchaPublicKey = '6LeVKb4SAAAAAGv-hg5i6gtiOV4XrLuCDsJOnYoP';
 			opts.capture.redirectUri = document.location.href;
-			opts.capture.loadJsUrl = 'd16s8pqtk4uodx.cloudfront.net/default/load.js';
+			//opts.capture.loadJsUrl = 'd29usylhdk1xyu.cloudfront.net/load/.default';
 			opts.capture.flowName = 'plugins';
 			opts.capture.responseType = 'token';
 			/*TODO: remove by default.  allow engage to set this if it needs it.*/
@@ -103,7 +103,7 @@ class Capture implements RenderableInterface
 			var e = document.createElement('script');
 			e.type = 'text/javascript';
 			e.id = 'janrainAuthWidget';
-			e.src = '{$this->config['capture.loadJsUrl']}';
+			e.src = '//d29usylhdk1xyu.cloudfront.net/load/.default';
 			var s = document.getElementsByTagName('script')[0];
 			s.parentNode.insertBefore(e, s);
 			})();
