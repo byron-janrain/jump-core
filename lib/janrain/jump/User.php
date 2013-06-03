@@ -11,6 +11,11 @@ class User
 	 */
 	protected $uuid;
 
+	/**
+	 * @var array
+	 */
+	protected $data;
+
 	protected function __construct()
 	{
 		$uuid = `uuidgen`;
@@ -24,6 +29,11 @@ class User
 		return $this->uuid;
 	}
 
+	public function __get($property)
+	{
+		return @$this->data[$property];
+	}
+
 	public static function create(array $properties)
 	{
 		return new self();
@@ -32,9 +42,8 @@ class User
 	public static function __set_state(array $data)
 	{
 		$instance = unserialize(sprintf('O:%u:"%s":0:{}', strlen(__CLASS__), __CLASS__));
-		foreach (get_object_vars($instance) as $k => $v) {
-			$instance->{$k} = $data[$k];
-		}
+		$instance->data = $data;
+		$instance->uuid = $data['uuid'];
 		return $instance;
 	}
 }

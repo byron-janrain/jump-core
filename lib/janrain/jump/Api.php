@@ -13,12 +13,13 @@ class Api
 	protected $data;
 
 	public function __construct(ArrayAccess $opts) {
-		$this->clientId = $opts['capture.clientId'];
+		/*$this->clientId = $opts['capture.clientId'];
 		$this->clientSecret = @$opts['capture.clientSecret'];
 		$this->data = array(
 			'client_id' => $this->clientId,
 			'client_secret' => $this->clientSecret,
-			);
+			);*/
+		$this->data = array();
 		$this->ctx = array(
 			'http' => array(
 				'method' => 'POST',
@@ -30,6 +31,9 @@ class Api
 		}
 	}
 
+	/**
+	 * Make a call against
+	 */
 	public function __invoke($url, $params) {
 		$params = array_merge($this->data, $params);
 		if (!empty($params['token'])) {
@@ -47,12 +51,18 @@ class Api
 		return $resp['result'];
 	}
 
+	/**
+	 * Retreive a JUMP User from capture using the provided token.
+	 */
 	public function fetchUserByUuid($uuid, $token = null)
 	{
 		echo '<pre>';
 		$data = $this('entity', array('uuid' => $uuid, 'token' => $token, 'type_name'=>'user'));
 		$user = User::__set_state($data);
 		var_dump($user);
+		var_dump($user->email);
+		var_dump($user->firstName);
+		var_dump($user->lastName);
 		return $user;
 	}
 }
