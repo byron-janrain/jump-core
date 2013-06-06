@@ -72,7 +72,7 @@ class Capture implements RenderableInterface
 	 */
 	public function getSettingsHeadJs()
 	{
-		$out = "\n//Start Janrain Settings
+		$out = "\n//Start Capture Settings
 			opts.capture.appId = '{$this->config['capture.appId']}';
 			opts.capture.clientId = '{$this->config['capture.clientId']}';
 			opts.capture.captureServer = '{$this->config['capture.captureServer']}';
@@ -84,7 +84,7 @@ class Capture implements RenderableInterface
 			/*TODO: remove by default.  allow engage to set this if it needs it.*/
 			opts.tokenUrl = document.location.href;
 			opts.tokenAction = 'event';
-			//End Janrain Settings\n";
+			//End Capture Settings\n";
 		return $out;
 	}
 
@@ -111,7 +111,6 @@ class Capture implements RenderableInterface
 				janrain.events.onCaptureLoginSuccess.addHandler(
 					function (result) {
 						console.log(result);
-						alert('Success: this is your token ' + result.accessToken + '\\nUUID:' + result.userData.uuid);
 						window.location.href = '{$this->config['jumpUrl']}?token=' + result.accessToken + '&uuid=' + result.userData.uuid;
 						janrain.capture.ui.modal.close();
 					});
@@ -121,8 +120,10 @@ class Capture implements RenderableInterface
 						janrain.capture.ui.modal.close();
 					});
 				janrain.events.onCaptureRegistrationSuccess.addHandler(
-					function () {
+					function (result) {
 						console.log('Registration Success!');
+						console.log(result);
+						//window.location.href = '{$this->config['jumpUrl']}?token=';
 						janrain.capture.ui.modal.close();
 					});
 				janrain.capture.ui.start();
