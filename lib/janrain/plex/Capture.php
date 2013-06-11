@@ -123,7 +123,7 @@ class Capture implements RenderableInterface
 					function (result) {
 						console.log('Registration Success!');
 						console.log(result);
-						//window.location.href = '{$this->config['jumpUrl']}?token=';
+						window.location.href = '{$this->config['jumpUrl']}?token=' + result.accessToken + '&uuid=' + result.userData.uuid;
 						janrain.capture.ui.modal.close();
 					});
 				janrain.capture.ui.start();
