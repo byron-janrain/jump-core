@@ -4,6 +4,7 @@ namespace janrain\jump;
 use \ArrayAccess;
 use \IteratorAggregate;
 use \Countable;
+use \ArrayObject;
 
 /**
  * Configuration handler template class.
