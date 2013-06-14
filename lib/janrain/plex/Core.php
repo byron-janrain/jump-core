@@ -8,7 +8,7 @@ class Core implements RenderableInterface
 	protected $config;
 	protected $features;
 
-	public function __construct(CoreConfigInterface $c)
+	public function __construct(CoreConfig $c)
 	{
 		$this->config = $c;
 		$this->features = array();

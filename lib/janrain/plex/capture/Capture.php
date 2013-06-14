@@ -8,7 +8,7 @@ class Capture /*extends AbstractFeature*/ implements RenderableInterface
 {
 	protected $config;
 
-	public function __construct(CaptureConfigInterface $config)
+	public function __construct(CaptureConfig $config)
 	{
 		$this->config = $config;
 	}
