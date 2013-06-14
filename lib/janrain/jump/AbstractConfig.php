@@ -1,6 +1,10 @@
 <?php
 namespace janrain\jump;
 
+use \ArrayAccess;
+use \IteratorAggregate;
+use \Countable;
+
 /**
  * Configuration handler template class.
  *
