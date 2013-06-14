@@ -23,11 +23,11 @@ abstract class AbstractConfig implements ArrayAccess, IteratorAggregate, Countab
 
 	public function __construct($data)
 	{
-		$data = $this->flatten($data);
+		$data = $this->flatten((object) $data);
 		$this->arrayObj = new ArrayObject($data, ArrayObject::ARRAY_AS_PROPS);
-		foreach (static::$REQUIRED_KEYS as &$key) {
-			if (!$this->arrayObj->offsetExists($key)) {
-				throw new \InvalidArgumentException("Required key \"$key\" not found when instantiating " . get_class());
+		foreach (static::$REQUIRED_KEYS as $key) {
+			if (!$this->offsetExists($key)) {
+				throw new \InvalidArgumentException("Required key \"$key\" not found when instantiating " . get_class($this));
 			}
 		}
 	}
@@ -69,11 +69,6 @@ abstract class AbstractConfig implements ArrayAccess, IteratorAggregate, Countab
 	protected function flatten($jsonDecoded, $path = '', &$out = array())
 	{
 		$type = gettype($jsonDecoded);
-
-		#sanity check
-		if ('' == $path && 'array' == $type) {
-			throw new \InvalidArgumentException("Tsk tsk, config data must have keys!");
-		}
 
 		if ('object' != $type) {
 			$out[$path] = $jsonDecoded;
