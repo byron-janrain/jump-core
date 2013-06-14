@@ -20,7 +20,7 @@ abstract class AbstractConfig implements ArrayAccess, IteratorAggregate, Countab
 
 	public static $REQUIRED_KEYS = array();
 
-	public function __construct(stdClass $data)
+	public function __construct($data)
 	{
 		$data = $this->flatten($data);
 		$this->arrayObj = new ArrayObject($data, ArrayObject::ARRAY_AS_PROPS);
