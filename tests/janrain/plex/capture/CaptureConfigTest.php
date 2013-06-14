@@ -1,5 +1,5 @@
 <?php
-namespace janrain\plex;
+namespace janrain\plex\capture;
 
 use \PHPUnit_Framework_TestCase;
 

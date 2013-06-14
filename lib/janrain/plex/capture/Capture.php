@@ -1,7 +1,10 @@
 <?php
-namespace janrain\plex;
+namespace janrain\plex\capture;
 
-class Capture implements RenderableInterface
+use janrain\plex\AbstractFeature;
+use janrain\plex\RenderableInterface;
+
+class Capture /*extends AbstractFeature*/ implements RenderableInterface
 {
 	protected $config;
 
@@ -23,7 +26,7 @@ class Capture implements RenderableInterface
 	 */
 	public function getStartHeadJs()
 	{
-		$out = "(function(){
+		/*$out = "(function(){
 			var opts;
 			if (typeof window.janrain !== 'object') {window.janrain = {};}
 			if (typeof window.janrain.settings !== 'object') window.janrain.settings = {};
@@ -63,7 +66,8 @@ class Capture implements RenderableInterface
 						return A;
 					};
 				}
-			}\n";
+			}\n";*/
+		$out = "opts.packages.push('capture');\n";
 		return $out;
 	}
 
@@ -84,6 +88,7 @@ class Capture implements RenderableInterface
 			/*TODO: remove by default.  allow engage to set this if it needs it.*/
 			opts.tokenUrl = document.location.href;
 			opts.tokenAction = 'event';
+			opts.plex.loadJsUrl = '//d29usylhdk1xyu.cloudfront.net/load/.default';
 			//End Capture Settings\n";
 		return $out;
 	}
@@ -93,7 +98,7 @@ class Capture implements RenderableInterface
 	 */
 	public function getEndHeadJs()
 	{
-		$out =
+		/*$out =
 			"function isReady() {janrain.ready=true;}
 			if (document.addEventListener) {
 				document.addEventListener('DOMContentLoaded', isReady, false);
@@ -103,11 +108,12 @@ class Capture implements RenderableInterface
 			var e = document.createElement('script');
 			e.type = 'text/javascript';
 			e.id = 'janrainAuthWidget';
-			e.src = '//d29usylhdk1xyu.cloudfront.net/load/.default';
+			e.src = opts.plex.loadJsUrl;
 			var s = document.getElementsByTagName('script')[0];
 			s.parentNode.insertBefore(e, s);
-			})();
-			function janrainCaptureWidgetOnLoad() {
+			})();";*/
+		$out =
+			"function janrainCaptureWidgetOnLoad() {
 				janrain.events.onCaptureLoginSuccess.addHandler(
 					function (result) {
 						console.log(result);
@@ -144,7 +150,7 @@ class Capture implements RenderableInterface
 	 */
 	public function getCss()
 	{
-		return file_get_contents(dirname(__DIR__) . '/plex/styles.css');
+		return file_get_contents(dirname(__DIR__) . '/styles.css');
 	}
 
 	/**
@@ -154,7 +160,7 @@ class Capture implements RenderableInterface
 	public function getHtml()
 	{
 		ob_start();
-		require dirname(__DIR__) . '/plex/screens.html';
+		require dirname(__DIR__) . '/screens.html';
 		$screens = ob_get_clean();
 		return "<a href='#' class='capture_modal_open'>Sign In</a>\n{$screens}\n";
 	}
