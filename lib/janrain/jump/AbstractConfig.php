@@ -14,7 +14,7 @@ use \Countable;
  * Additionally, extenders may implement mutators that will be automatically called when
  * values are assigned to keys.
  */
-abstract class Config implements ArrayAccess, IteratorAggregate, Countable
+abstract class AbstractConfig implements ArrayAccess, IteratorAggregate, Countable
 {
 	protected $arrayObj;
 
