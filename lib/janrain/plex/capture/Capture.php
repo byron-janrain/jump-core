@@ -4,13 +4,13 @@ namespace janrain\plex\capture;
 use janrain\plex\AbstractFeature;
 use janrain\plex\RenderableInterface;
 
-class Capture /*extends AbstractFeature*/ implements RenderableInterface
+class Capture extends AbstractFeature implements RenderableInterface
 {
 	protected $config;
 
-	public function __construct(CaptureConfig $config)
+	public function __construct(CaptureConfig $c)
 	{
-		$this->config = $config;
+		$this->config = $c;
 	}
 
 	/**

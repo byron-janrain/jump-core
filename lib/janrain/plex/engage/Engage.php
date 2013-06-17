@@ -1,13 +1,15 @@
 <?php
 namespace janrain\plex\engage;
 
+use janrain\plex\AbstractFeature;
+
 class Engage extends AbstractFeature
 {
 	protected $config;
 
-	public function __construct(EngageConfigInterface $config)
+	public function __construct(EngageConfig $c)
 	{
-		$this->config = $config;
+		$this->config = $c;
 	}
 
 	/**

@@ -10,7 +10,7 @@ class CaptureTest extends PHPUnit_Framework_TestCase
 
 	public function setUp() {
 
-		$this->config = $this->getMockBuilder(__NAMESPACE__ . '\CaptureConfigInterface')
+		$this->config = $this->getMockBuilder(__NAMESPACE__ . '\CaptureConfig')
 			->getMock();
 		$this->capture = new Capture($this->config);
 	}

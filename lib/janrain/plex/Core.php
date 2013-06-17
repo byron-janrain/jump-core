@@ -1,7 +1,7 @@
 <?php
 namespace janrain\plex;
 
-use janrain\plex\core\CoreConfigInterface;
+use janrain\plex\core\CoreConfig;
 
 class Core implements RenderableInterface
 {
@@ -38,7 +38,8 @@ class Core implements RenderableInterface
 			if (typeof window.janrain.settings !== 'object') window.janrain.settings = {};
 			opts = window.janrain.settings;
 			if (typeof opts.packages !== 'object') opts.packages = [];
-			if (typeof opts.capture !== 'object') opts.capture = {};\n";
+			if (typeof opts.capture !== 'object') opts.capture = {};
+			opts.plex = {}\n";
 		$out .=
 			"if (typeof Prototype !== 'undefined') {
 				var protVer = 0;
@@ -80,7 +81,7 @@ class Core implements RenderableInterface
 
 	public function getSettingsHeadJs()
 	{
-		$out = "opts.plex.jumpUrl = {$this->config['jumpUrl']}\n";
+		$out = "opts.plex.jumpUrl = '{$this->config['jumpUrl']}'\n";
 		foreach ($this->features as $f) {
 			$out .= $f->getSettingsHeadJs();
 		}
@@ -129,6 +130,27 @@ class Core implements RenderableInterface
 	public function getHtml()
 	{
 		return '';
+	}
+
+	public static function buildJumpWithConfig($featuresList, $rawConf)
+	{
+		static $jump;
+		if (!empty($jump)) {
+			return $jump;
+		}
+		$jump = ConfigBuilder::build('Core', $rawConf);
+		$features = preg_split('|,|', $featuresList, null, PREG_SPLIT_NO_EMPTY);
+		foreach ($features as $f) {
+			if (class_exists($f)) {
+				$fc = $f . 'Config';
+				$featureConf = new $fc($rawConf);
+				$feature = new $f($featureConf);
+				$jump->pushFeature($feature);
+			} else {
+				throw new \Exception('wtf');
+			}
+		}
+		return $jump;
 	}
 }
 
