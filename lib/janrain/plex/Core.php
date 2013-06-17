@@ -1,7 +1,8 @@
 <?php
 namespace janrain\plex;
 
-use janrain\plex\core\CoreConfig;
+use janrain\plex\CoreConfig;
+use janrain\jump\ConfigBuilder;
 
 class Core implements RenderableInterface
 {
@@ -138,17 +139,13 @@ class Core implements RenderableInterface
 		if (!empty($jump)) {
 			return $jump;
 		}
-		$jump = ConfigBuilder::build('Core', $rawConf);
+		$coreConfig = ConfigBuilder::build('janrain\plex\Core', $rawConf);
+		$jump = new Core($coreConfig);
 		$features = preg_split('|,|', $featuresList, null, PREG_SPLIT_NO_EMPTY);
 		foreach ($features as $f) {
-			if (class_exists($f)) {
-				$fc = $f . 'Config';
-				$featureConf = new $fc($rawConf);
-				$feature = new $f($featureConf);
-				$jump->pushFeature($feature);
-			} else {
-				throw new \Exception('wtf');
-			}
+			$featureConf = ConfigBuilder::build($f, $rawConf);
+			$feature = new $f($featureConf);
+			$jump->pushFeature($feature);
 		}
 		return $jump;
 	}

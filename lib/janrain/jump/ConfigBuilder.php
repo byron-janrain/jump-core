@@ -3,12 +3,12 @@ namespace janrain\jump;
 
 class ConfigBuilder
 {
-	public static function build($data, $returnType)
+	public static function build($className, $data)
 	{
 		static $generators = array();
-		if (empty($generators[$returnType])) {
-			$generators[$returnType] = new ReflectionClass("{$returnType}Config");
+		if (empty($generators[$className])) {
+			$generators[$className] = new \ReflectionClass("{$className}Config");
 		}
-		return $generators[$returnType]->newInstance($data);
+		return $generators[$className]->newInstance($data);
 	}
 }
