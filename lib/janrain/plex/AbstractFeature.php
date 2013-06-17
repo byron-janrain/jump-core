@@ -11,4 +11,9 @@ abstract class AbstractFeature
 	{
 		$this->config = $c;
 	}
+
+	public function isEnabled()
+	{
+		return true;
+	}
 }

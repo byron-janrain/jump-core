@@ -17,7 +17,7 @@ class Engage extends AbstractFeature
 	 */
 	public function getHeadJsSrcs()
 	{
-
+		return array();
 	}
 
 	/**
@@ -25,7 +25,7 @@ class Engage extends AbstractFeature
 	 */
 	public function getStartHeadJs()
 	{
-
+		return '';
 	}
 
 	/**
@@ -33,7 +33,13 @@ class Engage extends AbstractFeature
 	 */
 	public function getSettingsHeadJs()
 	{
-
+		$opts = array(
+			"opts.tokenUrl = '{$this->config['tokenUrl']}';",
+			"opts.appId = '{$this->config['appId']}';",
+			"opts.plex.loadJsUrl = '{$this->config['loadJsUrl']}';",
+			"opts.appUrl = '{$this->config['appUrl']}';",
+			);
+		return implode("\n", $opts) . "\n";
 	}
 
 	/**
@@ -41,7 +47,7 @@ class Engage extends AbstractFeature
 	 */
 	public function getEndHeadJs()
 	{
-
+		return '';
 	}
 
 	/**
@@ -49,7 +55,7 @@ class Engage extends AbstractFeature
 	 */
 	public function getCssHrefs()
 	{
-
+		return array();
 	}
 
 	/**
@@ -57,7 +63,7 @@ class Engage extends AbstractFeature
 	 */
 	public function getCss()
 	{
-
+		return '';
 	}
 
 	/**
@@ -65,6 +71,6 @@ class Engage extends AbstractFeature
 	 */
 	public function getHtml()
 	{
-
+		return "<a class='janrainEngage' href='#'>Sign-In</a>";
 	}
 }
