@@ -15,9 +15,10 @@ class Core implements RenderableInterface
 		$this->features = array();
 	}
 
-	public function pushFeature(capture\Capture $feature)
+	public function pushFeature(AbstractFeature $feature)
 	{
-		$this->features[] = $feature;
+		$featureName = substr(strrchr(get_class($feature), '\\'), 1);
+		$this->features[$featureName] = $feature;
 	}
 
 	/**
@@ -133,6 +134,11 @@ class Core implements RenderableInterface
 		return '';
 	}
 
+	public function getFeature($featureName)
+	{
+		return $this->features[$featureName];
+	}
+
 	public static function buildJumpWithConfig($featuresList, $rawConf)
 	{
 		static $jump;
@@ -143,8 +149,9 @@ class Core implements RenderableInterface
 		$jump = new Core($coreConfig);
 		$features = preg_split('|,|', $featuresList, null, PREG_SPLIT_NO_EMPTY);
 		foreach ($features as $f) {
-			$featureConf = ConfigBuilder::build($f, $rawConf);
-			$feature = new $f($featureConf);
+			$fNs = 'janrain\plex\\' . strtolower($f) . '\\' . $f;
+			$featureConf = ConfigBuilder::build("{$fNs}", $rawConf);
+			$feature = new $fNs($featureConf);
 			$jump->pushFeature($feature);
 		}
 		return $jump;
