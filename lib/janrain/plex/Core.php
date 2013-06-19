@@ -1,24 +1,13 @@
 <?php
 namespace janrain\plex;
 
-use janrain\plex\CoreConfig;
-use janrain\jump\ConfigBuilder;
-
-class Core implements RenderableInterface
+class Core extends AbstractFeature implements RenderableInterface
 {
 	protected $config;
-	protected $features;
 
-	public function __construct(CoreConfig $c)
+	public function __construct(\janrain\plex\CoreConfig $c)
 	{
 		$this->config = $c;
-		$this->features = array();
-	}
-
-	public function pushFeature(AbstractFeature $feature)
-	{
-		$featureName = substr(strrchr(get_class($feature), '\\'), 1);
-		$this->features[$featureName] = $feature;
 	}
 
 	/**
@@ -75,18 +64,12 @@ class Core implements RenderableInterface
 					};
 				}
 			}\n";
-		foreach ($this->features as $f) {
-			$out .= $f->getStartheadJs();
-		}
 		return $out;
 	}
 
 	public function getSettingsHeadJs()
 	{
 		$out = "opts.plex.jumpUrl = '{$this->config['jumpUrl']}'\n";
-		foreach ($this->features as $f) {
-			$out .= $f->getSettingsHeadJs();
-		}
 		return $out;
 	}
 
@@ -105,27 +88,18 @@ class Core implements RenderableInterface
 			var s = document.getElementsByTagName('script')[0];
 			s.parentNode.insertBefore(e, s);
 			})();\n";
-		foreach ($this->features as $f) {
-			$out .= $f->getEndHeadJs();
-		}
 		return $out;
 	}
 
 	public function getCssHrefs()
 	{
 		$out = array();
-		foreach ($this->features as $f) {
-			$out = array_merge($out, $f->getCssHrefs());
-		}
 		return $out;
 	}
 
 	public function getCss()
 	{
 		$out = '';
-		foreach ($this->features as $f) {
-			$out .= $f->getCss();
-		}
 		return $out;
 	}
 
@@ -134,48 +108,8 @@ class Core implements RenderableInterface
 		return '';
 	}
 
-	public function getFeature($featureName)
+	public function getPriority()
 	{
-		return $this->features[$featureName];
-	}
-
-	public static function buildJumpWithConfig($featuresList, $rawConf)
-	{
-		static $jump;
-		if (!empty($jump)) {
-			return $jump;
-		}
-		$coreConfig = ConfigBuilder::build('janrain\plex\Core', $rawConf);
-		$jump = new Core($coreConfig);
-		$features = preg_split('|,|', $featuresList, null, PREG_SPLIT_NO_EMPTY);
-		foreach ($features as $f) {
-			$fNs = 'janrain\plex\\' . strtolower($f) . '\\' . $f;
-			$featureConf = ConfigBuilder::build("{$fNs}", $rawConf);
-			$feature = new $fNs($featureConf);
-			$jump->pushFeature($feature);
-		}
-		return $jump;
+		return 0;
 	}
 }
-
-
-/*
-abstract class ConfigBuilder
-{
-	public function buildConfig($configClassName, $data)
-	{
-
-	}
-}
-abstract class FeatureBuilder
-{
-	protected static $features;
-	public function buildFeature($featureClassName, ConfigInterface $config)
-	{
-		if (!array_key_exists($featureClassName, self::$features)) {
-
-		}
-		return new $featureClassName($config);
-	}
-}
-*/
