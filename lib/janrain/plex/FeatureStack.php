@@ -3,7 +3,7 @@ namespace janrain\plex;
 
 class FeatureStack extends \SPLPriorityQueue
 {
-	public function $names;
+	protected $names;
 
 	public function pushFeature(AbstractFeature $f)
 	{
