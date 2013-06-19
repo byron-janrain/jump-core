@@ -16,4 +16,11 @@ abstract class AbstractFeature
 	{
 		return true;
 	}
+
+	public function getName()
+	{
+		return substr(strrchr(get_class($this), '\\'), 1);
+	}
+
+	abstract public function getPriority();
 }
