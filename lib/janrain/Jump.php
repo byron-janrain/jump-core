@@ -18,7 +18,7 @@ final class Jump
 		$featureList = $data['features'];
 		foreach ($featureList as $fName) {
 			$fClass = '\\janrain\\plex\\' . strtolower($fName) . "\\$fName";
-			$fConfig = ConfigBuilder::build("{$fClass}Config", $data);
+			$fConfig = ConfigBuilder::build($fClass, $data);
 			if (!class_exists($fClass)) {
 				throw new UnexpectedValueException("Failed to load class {$fClass}");
 			}
@@ -38,6 +38,7 @@ final class Jump
 		$this->features->insert($f, $f->getPriority());
 	}
 
+	private static $instance;
 	public static function getInstance($data)
 	{
 		if (empty(self::$instance)) {
