@@ -110,4 +110,9 @@ class Capture extends AbstractFeature implements RenderableInterface
 		$screens = ob_get_clean();
 		return "<a href='#' class='capture_modal_open'>Sign In</a>\n{$screens}\n";
 	}
+
+	public function getPriority()
+	{
+		return 1;
+	}
 }
