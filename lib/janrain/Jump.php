@@ -15,7 +15,7 @@ final class Jump implements plex\RenderableInterface
 		$this->features->pushFeature($core);
 		foreach ($data['features'] as $fName) {
 			$fClass = '\\janrain\\plex\\' . strtolower($fName) . "\\$fName";
-			$fConfig = ConfigBuilder::build($fClass, $data);
+			$fConfig = jump\ConfigBuilder::build($fClass, $data);
 			if (!class_exists($fClass)) {
 				throw new \UnexpectedValueException("Failed to load class {$fClass}");
 			}
