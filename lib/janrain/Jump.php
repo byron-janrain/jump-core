@@ -1,34 +1,28 @@
 <?php
 namespace janrain;
 
-use SPLPriorityQueue;
-use janrain\jump\ConfigBuilder;
-use janrain\plex\AbstractFeature;
-use UnexpectedValueException;
 use janrain\plex\Core;
 
 final class Jump implements plex\RenderableInterface
 {
 	private $features;
-	private $featureNames;
 
 	private function __construct($data)
 	{
-		$this->features = new SPLPriorityQueue();
-		$coreConfig = ConfigBuilder::build('janrain\\plex\\Core', $data);
-		$core = new Core($coreConfig);
-		$this->pushFeature($core);
+		$this->features = new plex\FeatureStack();
+		$coreConfig = jump\ConfigBuilder::build('janrain\\plex\\Core', $data);
+		$core = new plex\Core($coreConfig);
+		$this->features->pushFeature($core);
 		foreach ($data['features'] as $fName) {
 			$fClass = '\\janrain\\plex\\' . strtolower($fName) . "\\$fName";
 			$fConfig = ConfigBuilder::build($fClass, $data);
 			if (!class_exists($fClass)) {
-				throw new UnexpectedValueException("Failed to load class {$fClass}");
+				throw new \UnexpectedValueException("Failed to load class {$fClass}");
 			}
 			$feature = new $fClass($fConfig);
-			$this->pushFeature($feature);
+			$this->features->pushFeature($feature);
 		}
 	}
-
 
 	/**
 	 * {@inheritdoc}
@@ -83,15 +77,14 @@ final class Jump implements plex\RenderableInterface
 		return '';
 	}
 
-	public function getFeature($name)
+	public function getFeatures()
 	{
-		return $this->features[$name];
+		return $this->features;
 	}
 
-	private function pushFeature(AbstractFeature $f)
+	public function getFeature($name)
 	{
-		$this->featureNames[$f->getName()] = $f;
-		$this->features->insert($f, $f->getPriority());
+		return $this->features->getFeature($name);
 	}
 
 	private static $instance;
