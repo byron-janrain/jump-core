@@ -104,7 +104,8 @@ class Capture extends AbstractFeature implements RenderableInterface
 	 */
 	public function getHtml()
 	{
-		$doEngage = Core::getFeature('Engage')->isEnabled();
+		//$doEngage = Core::getFeature('Engage')->isEnabled();
+		$doEngage = false;
 		ob_start();
 		require dirname(__DIR__) . '/screens.html';
 		$screens = ob_get_clean();
