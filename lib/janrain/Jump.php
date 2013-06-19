@@ -18,7 +18,7 @@ final class Jump
 		$featureList = $data['features'];
 		foreach ($featureList as $fName) {
 			$fClass = '\\janrain\\plex\\' . strtolower($fName) . "\\$fName";
-			$fConfig = ConfigBuilder::build($fClass, $data);
+			$fConfig = ConfigBuilder::build("{$fClass}Config", $data);
 			if (!class_exists($fClass)) {
 				throw new UnexpectedValueException("Failed to load class {$fClass}");
 			}
