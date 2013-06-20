@@ -1,23 +1,26 @@
 <?php
 namespace janrain\plex;
 
-class FeatureStack extends \SPLPriorityQueue
+class FeatureStack implements \IteratorAggregate
 {
 	protected $names;
+	protected $features;
+	protected $iter;
 
 	public function pushFeature(AbstractFeature $f)
 	{
-		$this->insert($f, $f->getPriority());
+		$this->features[$f->getPriority()] = $f;
 		$this->names[$f->getName()] = $f;
-	}
-
-	public function compare($priority1, $priority2)
-	{
-		return parent::compare($priority2, $priority1);
+		$this->iter = new \ArrayIterator($this->features);
 	}
 
 	public function getFeature($name)
 	{
 		return $this->names[$name];
+	}
+
+	public function getIterator()
+	{
+		return $this->iter;
 	}
 }
