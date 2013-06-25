@@ -112,6 +112,11 @@ class Capture extends AbstractFeature implements RenderableInterface
 		return "<a href='#' class='capture_modal_open'>Sign In</a>\n{$screens}\n";
 	}
 
+	/**
+	 * @inheritsDoc
+	 *
+	 * Returns 1
+	 */
 	public function getPriority()
 	{
 		return 1;

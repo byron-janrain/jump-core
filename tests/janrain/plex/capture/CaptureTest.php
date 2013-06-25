@@ -1,9 +1,7 @@
 <?php
 namespace janrain\plex\capture;
 
-use \PHPUnit_Framework_TestCase;
-
-class CaptureTest extends PHPUnit_Framework_TestCase
+class CaptureTest extends \PHPUnit_Framework_TestCase
 {
 	protected $config;
 	protected $capture;
@@ -11,6 +9,7 @@ class CaptureTest extends PHPUnit_Framework_TestCase
 	public function setUp() {
 
 		$this->config = $this->getMockBuilder(__NAMESPACE__ . '\CaptureConfig')
+			->disableOriginalConstructor()
 			->getMock();
 		$this->capture = new Capture($this->config);
 	}

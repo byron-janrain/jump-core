@@ -1,26 +1,62 @@
 <?php
 namespace janrain\plex;
 
-class FeatureStack implements \IteratorAggregate
+/**
+ * The feature stack.  Essentially a priority queue, to define the set of features that are
+ * active at any time.  Iterable and countable. Uses feature->getPriority to set stack order
+ * non-destructive, however, only one of each feature type can exist at a time so adding a
+ * second feature of the same class-type overwrites the previous feature for that name.
+ */
+class FeatureStack implements \IteratorAggregate, \Countable
 {
 	protected $names;
 	protected $features;
-	protected $iter;
 
+	public function __construct()
+	{
+		$this->names = array();
+		$this->features = new \ArrayObject();
+	}
+
+	/**
+	 *
+	 */
 	public function pushFeature(AbstractFeature $f)
 	{
 		$this->features[$f->getPriority()] = $f;
 		$this->names[$f->getName()] = $f;
-		$this->iter = new \ArrayIterator($this->features);
 	}
 
+	/**
+	 * Get a feature by it's short name.  For example, to get the Engage feature use $stack->getFeature('Engage')
+	 * as opposed to $stack->getFeature('janrain\plex\engage\Engage').  This is mostly use for easy access to widgets.
+	 * i.e. $widgetMarkup = $stack->getFeature('Engage')->getHtml();
+	 *
+	 * @param string $name
+	 *   The short classname of the feature you wish to grab.
+	 *
+	 * @return AbstractFeature
+	 *   The feature mapped to this shortname.
+	 */
 	public function getFeature($name)
 	{
 		return $this->names[$name];
 	}
 
+	/**
+	 * {@inheritsDoc}
+	 */
 	public function getIterator()
 	{
-		return $this->iter;
+		$this->features->ksort();
+		return $this->features->getIterator();
+	}
+
+	/**
+	 * {@inheritsDoc}
+	 */
+	public function count()
+	{
+		return count($this->features);
 	}
 }

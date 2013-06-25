@@ -1,14 +1,16 @@
 <?php
-namespace janrain\plex\capture;
+namespace janrain\plex\engage;
 
-class CaptureConfigTest extends \PHPUnit_Framework_TestCase
+use \PHPUnit_Framework_TestCase;
+
+class EngageConfigTest extends PHPUnit_Framework_TestCase
 {
 	/**
 	 * @expectedException PHPUnit_Framework_Error
 	 */
 	public function testInitNoData()
 	{
-		new CaptureConfig();
+		new EngageConfig();
 	}
 
 	/**
@@ -17,12 +19,12 @@ class CaptureConfigTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testInitMissingData($missingKey)
 	{
-		$coreConfig = new CaptureConfig($missingKey);
+		$coreConfig = new EngageConfig($missingKey);
 	}
 
 	public function partialKeysGenerator()
 	{
-		$allKeys = CaptureConfig::$REQUIRED_KEYS;
+		$allKeys = EngageConfig::$REQUIRED_KEYS;
 		$out = array();
 		foreach ($allKeys as $key) {
 			$out[] = array(array_diff(array($key), $allKeys));

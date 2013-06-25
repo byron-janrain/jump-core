@@ -9,7 +9,9 @@ class CoreTest extends PHPUnit_Framework_TestCase
 	protected $core;
 
 	public function setUp() {
-		$this->config = $this->getMock(__NAMESPACE__ . '\core\CoreConfigInterface');
+		$this->config = $this->getMockBuilder(__NAMESPACE__ . '\CoreConfig')
+			->disableOriginalConstructor()
+			->getMock();
 		$this->core = new Core($this->config);
 	}
 

@@ -73,4 +73,12 @@ class Engage extends AbstractFeature
 	{
 		return "<a class='janrainEngage' href='#'>Sign-In</a>";
 	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getPriority()
+	{
+		return 2;
+	}
 }
