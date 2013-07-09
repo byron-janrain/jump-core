@@ -20,4 +20,10 @@ class UserTest extends PHPUnit_Framework_TestCase
 		$this->assertInternalType('string', $u->getUuid());
 		$this->assertEquals(37, strlen($u->getUuid()));
 	}
+
+	public function testGetProperty()
+	{
+		$u = User::create(array('birthday'=>'6/24/80'));
+		$this->assertEquals($u->birthday, $u->{'birthday'});
+	}
 }

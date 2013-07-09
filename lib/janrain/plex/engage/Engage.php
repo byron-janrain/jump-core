@@ -25,7 +25,8 @@ class Engage extends AbstractFeature
 	 */
 	public function getStartHeadJs()
 	{
-		return '';
+		$out = "opts.packages.push('login');\n";
+		return $out;
 	}
 
 	/**
@@ -33,11 +34,15 @@ class Engage extends AbstractFeature
 	 */
 	public function getSettingsHeadJs()
 	{
+		if (\janrain\Jump::getInstance(array())->getFeature('Capture')) {
+			return '';
+		}
 		$opts = array(
-			"opts.tokenUrl = '{$this->config['tokenUrl']}';",
+			"opts.tokenUrl = opts.plex.jumpUrl;",
 			"opts.appId = '{$this->config['appId']}';",
 			"opts.plex.loadJsUrl = '{$this->config['loadJsUrl']}';",
 			"opts.appUrl = '{$this->config['appUrl']}';",
+			"opts.noReturnExperience = true;",
 			);
 		return implode("\n", $opts) . "\n";
 	}

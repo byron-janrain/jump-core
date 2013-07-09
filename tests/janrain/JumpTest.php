@@ -13,6 +13,11 @@ class JumpTest extends PHPUnit_Framework_TestCase
 		$this->mockConf = $this->getMockBuilder('janrain\jump\AbstractConfig')
 			->disableOriginalConstructor()
 			->getMock();
+		$this->mockConf
+			->expects($this->any())
+			->method('getIterator')
+			->will($this->returnValue(new \ArrayIterator()));
+			//->method()->will();
 	}
 
 	/**
@@ -25,6 +30,6 @@ class JumpTest extends PHPUnit_Framework_TestCase
 
 	public function testInitConfig()
 	{
-		Jump::getInstance($this->mockConf);
+		Jump::getInstance(array('jumpUrl' => 'jumpUrl', 'features' => array()));
 	}
 }

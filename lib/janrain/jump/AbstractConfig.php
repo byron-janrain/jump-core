@@ -14,6 +14,8 @@ use \ArrayObject;
  *
  * Additionally, extenders may implement mutators that will be automatically called when
  * values are assigned to keys.
+ *
+ * @todo Create a generic subclass for testing this explicitly
  */
 abstract class AbstractConfig implements ArrayAccess, IteratorAggregate, Countable
 {
