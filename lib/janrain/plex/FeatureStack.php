@@ -35,12 +35,15 @@ class FeatureStack implements \IteratorAggregate, \Countable
 	 * @param string $name
 	 *   The short classname of the feature you wish to grab.
 	 *
-	 * @return AbstractFeature
-	 *   The feature mapped to this shortname.
+	 * @return AbstractFeature|null
+	 *   The feature mapped to this shortname. Or null if the feature does not exist
 	 */
 	public function getFeature($name)
 	{
-		return $this->names[$name];
+		if (isset($this->names[$name])) {
+			return $this->names[$name];
+		}
+		return null;
 	}
 
 	/**
