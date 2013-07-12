@@ -14,8 +14,9 @@
 		}
 	},
 	"require-dev": {
-		"phpunit/phpunit": "3.7.*",
-		"apigen/apigen": "2.8.*"
+		"php": ">=5.5.0",
+		"phpunit/phpunit": "*",
+		"apigen/apigen": "*"
 	},
 	"scripts": {
 		"post-install-cmd": [
