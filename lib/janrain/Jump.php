@@ -63,7 +63,7 @@ final class Jump implements plex\RenderableInterface
 
 	public function raw_render()
 	{
-		$out = "//START Janrain JUMP\n";
+		$out = "<!-- START Janrain JUMP -->\n";
 		foreach ($this->getCssHrefs() as $href) {
 			$out .= "<link type='text/css' rel='stylesheet' href='{$href}'/>\n";
 		}
@@ -71,8 +71,8 @@ final class Jump implements plex\RenderableInterface
 		foreach ($this->getHeadJsSrcs() as $src) {
 			$out .= "<script type='text/javascript' src='{$src}'></script>\n";
 		}
-		$out .= "<script type='text/javascript><![CDATA[\n{$this->getStartheadJs()}\n{$this->getSettingsHeadJs()}\n{$this->getEndHeadJs()}\n]]></script>";
-		$out .= "//END Janrain JUMP\n";
+		$out .= "<script type='text/javascript>\n//<![CDATA[\n{$this->getStartheadJs()}\n{$this->getSettingsHeadJs()}\n{$this->getEndHeadJs()}\n//]]>\n</script>";
+		$out .= "<!-- END Janrain JUMP -->\n";
 		return $out;
 	}
 
