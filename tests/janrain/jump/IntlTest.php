@@ -7,25 +7,19 @@ class IntlTest extends \PHPUnit_Framework_TestCase
 	public function testFactoryInit()
 	{
 		$xlate = Intl::createForLang();
-		$this->assertInstanceOf($xlate, 'janrain\\jump\\Intl');
+		$this->assertInstanceOf(Intl::class, $xlate);
 	}
 
 	public function testInitDefaultsToEnUs()
 	{
 		$xlate = Intl::createForLang();
-		$rc = new \ReflectionClass($xlate);
-		$p = $rc->getProperty('lang');
-		$p->setAccessible(true);
-		$this->assertEquals('en_us', $p->getValue($xlate));
+		$this->assertAttributeEquals('en_us', 'lang', $xlate);
 	}
 
 	public function testInitLangSet()
 	{
 		$xlate = Intl::createForLang('fr-ca');
-		$rc = new \ReflectionClass($xlate);
-		$p = $rc->getProperty('lang');
-		$p->setAccessible(true);
-		$this->assertEquals('fr-ca', $p->getValue($xlate));
+		$this->assertAttributeEquals('fr-ca', 'lang', $xlate);
 	}
 
 	public function testTranslate()
