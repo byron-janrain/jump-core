@@ -35,7 +35,7 @@ class Core extends AbstractFeature implements RenderableInterface
 			if (typeof opts.capture !== 'object') opts.capture = {};
 			opts.plex = {
 				do: function (actionName) {
-					#
+					//todo: do stuff
 				},
 				go: function (url, params) {
 					if ('undefined' !== typeof params) {
