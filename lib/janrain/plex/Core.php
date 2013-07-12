@@ -37,12 +37,16 @@ class Core extends AbstractFeature implements RenderableInterface
 				do: function (actionName) {
 					#
 				},
-				go: function (url) {
-					if (1 == arguments.length) {
-						window.location.href = url;
-					} else {
-						window.location.href = url +
+				go: function (url, params) {
+					if ('undefined' !== typeof params) {
+						if ('?' != url.slice(-1,1)) {
+							url += '?';
+						}
+						for (var k in params) {
+							url += '&' + encodeURIComponent(k) + '=' + encodeURIComponent(params[k]);
+						}
 					}
+					window.location.href = url;
 				}
 			}\n";
 		return $out;
