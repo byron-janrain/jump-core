@@ -15,7 +15,10 @@ class Core extends AbstractFeature implements RenderableInterface
 	 */
 	public function getHeadJsSrcs()
 	{
-		return array();
+		return array(
+			'//d3t53pw1y3gpqf.cloudfront.net/localstorage-polyfill.js',
+			'//d3t53pw1y3gpqf.cloudfront.net/prototype-fix-pre1.7.1.js',
+			);
 	}
 
 	/**
@@ -30,38 +33,16 @@ class Core extends AbstractFeature implements RenderableInterface
 			opts = window.janrain.settings;
 			if (typeof opts.packages !== 'object') opts.packages = [];
 			if (typeof opts.capture !== 'object') opts.capture = {};
-			opts.plex = {}\n";
-		$out .=
-			"if (typeof Prototype !== 'undefined') {
-				var protVer = 0;
-				var m = 100;
-				Prototype.Version.split('.').forEach(
-					function (value) {
-						protVer += m * value;
-						m /= 10;
-					});
-				if (protVer < 171) {
-					//FIX PROTOTYPE
-					Array.prototype.map = function(callback, thisArg) {
-						var T, A, k;
-						if (this == null) throw new TypeError(' this is null or not defined');
-						var O = Object(this);
-						var len = O.length >>> 0;
-						if (typeof callback !== 'function') throw new TypeError(callback + ' is not a function');
-						if (thisArg) T = thisArg;
-						A = new Array(len);
-						k = 0;
-						while (k < len) {
-							var kValue, mappedValue;
-							if (k in O) {
-								kValue = O[k];
-								mappedValue = callback.call(T, kValue, k, O);
-								A[k] = mappedValue;
-							}
-							k++;
-						}
-						return A;
-					};
+			opts.plex = {
+				do: function (actionName) {
+					#
+				},
+				go: function (url) {
+					if (1 == arguments.length) {
+						window.location.href = url;
+					} else {
+						window.location.href = url +
+					}
 				}
 			}\n";
 		return $out;
