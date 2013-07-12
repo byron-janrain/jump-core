@@ -33,7 +33,7 @@ class Core extends AbstractFeature implements RenderableInterface
 			opts = window.janrain.settings;
 			if (typeof opts.packages !== 'object') opts.packages = [];
 			if (typeof opts.capture !== 'object') opts.capture = {};
-			opts.plex = {
+			window.janrain.plex = {
 				do: function (actionName) {
 					//todo: do stuff
 				},
