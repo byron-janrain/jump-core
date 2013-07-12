@@ -68,7 +68,7 @@ final class Jump implements plex\RenderableInterface
 			$out .= "<link type='text/css' rel='stylesheet' href='{$href}'/>\n";
 		}
 		$out .= "<style type='text/css'>\n{$this->getCss()}\n</style>\n";
-		foreach ($this->getHeadJsSrcs as $src) {
+		foreach ($this->getHeadJsSrcs() as $src) {
 			$out .= "<script type='text/javascript' src='{$src}'></script>\n";
 		}
 		$out .= "<script type='text/javascript><![CDATA[\n{$this->getStartheadJs()}\n{$this->getSettingsHeadJs()}\n{$this->getEndHeadJs()}\n]]></script>";
