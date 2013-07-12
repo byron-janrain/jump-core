@@ -9,14 +9,14 @@ class AbstractFeatureTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testInitNoConfig()
 	{
-		$mock = $this->getMockForAbstractClass(__NAMESPACE__ . '\AbstractFeature');
+		$mock = $this->getMockForAbstractClass(AbstractFeature::class);
 	}
 
 	public function testInit()
 	{
-		$mockConf = $this->getMockForAbstractClass('janrain\jump\AbstractConfig', array(), '', false);
-		$mock = $this->getMockForAbstractClass(__NAMESPACE__ . '\AbstractFeature', array($mockConf));
-		$this->assertInstanceOf(__NAMESPACE__ . '\AbstractFeature', $mock);
+		$mockConf = $this->getMockForAbstractClass(\janrain\jump\AbstractConfig::class, array(), '', false);
+		$mock = $this->getMockForAbstractClass(AbstractFeature::class, array($mockConf));
+		$this->assertInstanceOf(AbstractFeature::class, $mock);
 		return $mock;
 	}
 
@@ -34,7 +34,6 @@ class AbstractFeatureTest extends \PHPUnit_Framework_TestCase
 	public function testGetName(AbstractFeature $mock)
 	{
 		$rc = new \ReflectionClass($mock);
-		$name = $rc->getShortName();
-		$this->assertEquals($mock->getName(), $name);
+		$this->assertEquals($rc->getShortName(), $mock->getName());
 	}
 }

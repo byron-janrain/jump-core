@@ -20,7 +20,7 @@ class ApiTest extends PHPUnit_Framework_TestCase
 	public function testInit()
 	{
 		$api = new Api($this->config);
-		$this->assertInstanceof('\janrain\jump\Api', $api);
+		$this->assertInstanceof(Api::class, $api);
 	}
 
 	/**

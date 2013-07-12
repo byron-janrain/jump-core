@@ -8,7 +8,7 @@ class FeatureStackTest extends \PHPUnit_Framework_TestCase
 	public function setUp()
 	{
 		$this->mockFeatureName = 'MockFeature';
-		$this->mockFeature = $this->getMockBuilder(__NAMESPACE__ . '\AbstractFeature')
+		$this->mockFeature = $this->getMockBuilder(AbstractFeature::class)
 			->disableOriginalConstructor()
 			->getMock();
 		$this->mockFeature->expects($this->any())
@@ -45,7 +45,7 @@ class FeatureStackTest extends \PHPUnit_Framework_TestCase
 	public function testFeaturesGetPrioritized()
 	{
 		$stack = new FeatureStack();
-		$secondFeature = $this->getMockBuilder(__NAMESPACE__ . '\AbstractFeature')
+		$secondFeature = $this->getMockBuilder(AbstractFeature::class)
 			->disableOriginalConstructor()
 			->getMock();
 		$secondFeature->expects($this->any())

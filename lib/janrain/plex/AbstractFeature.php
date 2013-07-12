@@ -19,7 +19,11 @@ abstract class AbstractFeature
 
 	public function getName()
 	{
-		return substr(strrchr(get_class($this), '\\'), 1);
+		$class = get_called_class();
+		if (strpos($class, '\\') === false) {
+			return $class;
+		}
+		return substr(strrchr(get_called_class(), '\\'), 1);
 	}
 
 	abstract public function getPriority();

@@ -10,7 +10,7 @@ class EngageTest extends PHPUnit_Framework_TestCase
 
 	public function setUp() {
 
-		$this->config = $this->getMockBuilder(__NAMESPACE__ . '\EngageConfig')
+		$this->config = $this->getMockBuilder(EngageConfig::class)
 			->disableOriginalConstructor()
 			->getMock();
 		$this->engage = new Engage($this->config);
