@@ -87,7 +87,12 @@ class Capture extends AbstractFeature implements RenderableInterface
 	 */
 	public function getCssHrefs()
 	{
-		return array();
+		$out = array('//d3t53pw1y3gpqf.cloudfront.net/styles/janrain.css');
+		#todo decide how we're going to detect mobile
+		if (false) {
+			$out[] = '//d3t53pw1y3gpqf.cloudfront.net/styles/janrain-mobile.css';
+		}
+		return $out;
 	}
 
 	/**
@@ -95,7 +100,8 @@ class Capture extends AbstractFeature implements RenderableInterface
 	 */
 	public function getCss()
 	{
-		return file_get_contents(dirname(__DIR__) . '/styles.css');
+		#todo enable css customization by file upload or database storage.
+		return '';
 	}
 
 	/**
