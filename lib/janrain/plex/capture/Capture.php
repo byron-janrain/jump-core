@@ -115,7 +115,10 @@ class Capture extends AbstractFeature implements RenderableInterface
 		ob_start();
 		require dirname(__DIR__) . '/screens.html';
 		$screens = ob_get_clean();
-		return "<a href='#' class='capture_modal_open'>Sign In</a>\n{$screens}\n";
+		return
+			"<a href='#' id='captureSignInLink' class='capture_modal_open'>Sign In / Sign Up</a>
+			<a href='#' id='captureProfileLink' style='display:none' onclick='janrain.capture.ui.renderScreen(\"editProfile\")>Edit Profile</a>
+			<a href='#' id='captureSignOutLink' class='capture_end_session' style='display:none'>Sign Out</a>\n{$screens}\n";
 	}
 
 	/**
