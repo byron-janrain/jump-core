@@ -25,11 +25,7 @@ class User
 	 */
 	protected function __construct()
 	{
-		$uuid = `uuidgen`;
-		if (is_null($uuid)) {
-			throw new \Exception('Cannot create uuid!');
-		}
-		$this->uuid = strtolower(`uuidgen`);
+		$this->uuid = strtolower(Api::generateUuid());
 	}
 
 	/**
