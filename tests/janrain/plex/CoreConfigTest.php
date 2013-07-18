@@ -5,7 +5,7 @@ class CoreConfigTest extends \PHPUnit_Framework_TestCase
 {
 	/**
 	 * @expectedException PHPUnit_Framework_Error
-	 * @covers janrain\plex\AbstractConfig::__construct
+	 * @covers janrain\jump\AbstractConfig::__construct
 	 */
 	public function testInitNoData()
 	{
