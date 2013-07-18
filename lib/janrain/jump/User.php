@@ -6,6 +6,9 @@ namespace janrain\jump;
  */
 class User implements Mappable
 {
+    /**
+     *
+     */
     public function offsetSet($offset, $value)
     {
         if (!$this->offsetExists($offset)) {
