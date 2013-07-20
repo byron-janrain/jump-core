@@ -7,6 +7,7 @@ class CaptureApi
 
     protected $ctx;
     protected $data;
+    protected $url;
 
     public function __construct(CaptureApiConfig $conf) {
         $this->conf = $conf;
@@ -16,7 +17,7 @@ class CaptureApi
                 'method' => 'POST',
                 'header' => "Accept-Encoding: identity\r\nContent-type: application/x-www-form-urlencoded\r\n",
                 ));
-        $this->url = $opts['capture.captureServer'];
+        $this->url = $this->conf['capture.captureServer'];
         if ($this->url[(strlen($this->url) - 1)] !== '/') {
             $this->url .= '/';
         }
