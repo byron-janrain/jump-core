@@ -9,7 +9,8 @@ class Transform {
 
 	protected $xforms;
 
-	public function __construct(Array $defaults = null) {
+	public function __construct(Array $defaults = null)
+	{
 		$this->xforms = $defaults ?: array();
 	}
 
