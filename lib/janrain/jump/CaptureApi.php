@@ -25,13 +25,12 @@ class CaptureApi
     /**
      * Make a call against
      */
-    public function __invoke($url, $params) {
+    public function __invoke($url, $params, $token = null) {
         $params = array_merge($this->data, $params);
-        if (!empty($params['token'])) {
-            unset($params['client_id']);
-            unset($params['client_secret']);
-            $this->ctx['http']['header'] .= "Authorization: OAuth {$params['token']}\r\n";
-            unset($params['token']);
+        if ($token) {
+            $this->ctx['http']['header'] .= "Authorization: OAuth {$token}\r\n";
+        } else {
+            $this->signCtx();
         }
         $this->ctx['http']['content'] = http_build_query($params);
         $stream = stream_context_create($this->ctx);
@@ -41,6 +40,21 @@ class CaptureApi
         }
         return $resp['result'];
     }
+
+    private function signRequest($params, $url)
+    {
+        #no token found, use message signing so we never transfer the client_secret
+        $timeStr = gmdate('Y-m-d H:i:s');
+        $this->ctx['http']['header'] .= "Date: {$timeStr}\r\n";
+        $data = "{$url}\n{$timeStr}\n";
+        foreach ($params as $k => $v) {
+            $data .= "{$k}={$v}\n";
+        }
+        $rawDigest = hash_hmac('sha1', $data, $this->conf['capture.clientSecret'], true);
+        $b64 = base64_encode($rawDigest);
+        $this->ctx['http']['header'] .= "Authorization: Signature {$this->conf['capture.clientId']}:{$b64}\r\n";
+    }
+
 
     /**
      * Retreive a JUMP User from capture using the provided token.
