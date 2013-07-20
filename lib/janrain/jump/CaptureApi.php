@@ -31,7 +31,7 @@ class CaptureApi
         if ($token) {
             $this->ctx['http']['header'] .= "Authorization: OAuth {$token}\r\n";
         } else {
-            $this->signCtx();
+            $this->signRequest($url, $params);
         }
         $this->ctx['http']['content'] = http_build_query($params);
         $stream = stream_context_create($this->ctx);
@@ -42,7 +42,7 @@ class CaptureApi
         return $resp['result'];
     }
 
-    private function signRequest($params, $url)
+    private function signRequest($url, $params)
     {
         #no token found, use message signing so we never transfer the client_secret
         $timeStr = gmdate('Y-m-d H:i:s');
