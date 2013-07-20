@@ -1,24 +1,15 @@
 <?php
 namespace janrain\jump;
 
-use \ArrayAccess;
-
-class Api
+class CaptureApi
 {
-
-    protected $clientId;
-    protected $clientSecret;
+    protected $conf;
 
     protected $ctx;
     protected $data;
 
-    public function __construct(ArrayAccess $opts) {
-        /*$this->clientId = $opts['capture.clientId'];
-        $this->clientSecret = @$opts['capture.clientSecret'];
-        $this->data = array(
-            'client_id' => $this->clientId,
-            'client_secret' => $this->clientSecret,
-            );*/
+    public function __construct(CaptureApiConfig $conf) {
+        $this->conf = $conf;
         $this->data = array();
         $this->ctx = array(
             'http' => array(
@@ -56,13 +47,8 @@ class Api
      */
     public function fetchUserByUuid($uuid, $token = null)
     {
-        echo '<pre>';
         $data = $this('entity', array('uuid' => $uuid, 'token' => $token, 'type_name'=>'user'));
         $user = User::__set_state($data);
-        var_dump($user);
-        var_dump($user->email);
-        var_dump($user->firstName);
-        var_dump($user->lastName);
         return $user;
     }
 

@@ -7,6 +7,7 @@ final class Jump implements plex\RenderableInterface
 {
 	private $features;
 
+	private $api;
 
 	/**
 	 * {@inheritdoc}
