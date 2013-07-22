@@ -25,12 +25,3 @@ interface PlexInterface
 
 	public function getLocale();
 }
-
-interface PlexUser
-{
-	public function getIsLoggedIn();
-	public function getProperty($propertyName);
-	public function setProperty($propertyName, $newValue);
-	public function login();
-	public function logout();
-}
