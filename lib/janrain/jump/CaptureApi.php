@@ -62,7 +62,7 @@ class CaptureApi
      */
     public function fetchUserByUuid($uuid, $token = null)
     {
-        $data = $this('entity', array('uuid' => $uuid, 'token' => $token, 'type_name'=>'user'));
+        $data = $this('entity', array('uuid' => $uuid, 'type_name'=>'user'), $token);
         $user = User::__set_state($data);
         return $user;
     }
