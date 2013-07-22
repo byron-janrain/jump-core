@@ -130,4 +130,11 @@ class Capture extends AbstractFeature implements RenderableInterface
 	{
 		return 1;
 	}
+
+	public function getApi()
+	{
+		$apiConfig = new \janrain\jump\CaptureApiConfig($this->config);
+		$api = new \janrain\jump\CaptureApi($apiConfig);
+		return $api;
+	}
 }

@@ -7,7 +7,7 @@ namespace janrain\jump;
 class User implements Mappable
 {
     /**
-     *
+     * @inherit
      */
     public function offsetSet($offset, $value)
     {
@@ -105,6 +105,14 @@ class User implements Mappable
     public function getId()
     {
         return $this->uuid;
+    }
+
+    /**
+     * @inheritsDoc
+     */
+    public function getMappableFields()
+    {
+
     }
 
     /**
