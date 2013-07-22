@@ -6,5 +6,5 @@ namespace janrain\jump;
  */
 interface Mappable extends \ArrayAccess
 {
-	#
+	public function getMappableFields();
 }
