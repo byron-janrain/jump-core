@@ -109,7 +109,7 @@ final class Jump implements plex\RenderableInterface
         }
     }
 
-    public function do($action, plex\Platform $platform)
+    public function doAction($action, plex\Platform $platform)
     {
         switch ($action) {
         default:
