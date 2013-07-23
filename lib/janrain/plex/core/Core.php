@@ -1,11 +1,14 @@
 <?php
 namespace janrain\plex\core;
 
+use janrain\plex\AbstractFeature;
+use janrain\plex\RenderableInterface;
+
 class Core extends AbstractFeature implements RenderableInterface
 {
     protected $config;
 
-    public function __construct(\janrain\plex\CoreConfig $c)
+    public function __construct(CoreConfig $c)
     {
         $this->config = $c;
     }

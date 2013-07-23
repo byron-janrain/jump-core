@@ -1,15 +1,13 @@
 <?php
 namespace janrain\plex\core;
 
-use PHPUnit_Framework_TestCase;
-
-class CoreTest extends PHPUnit_Framework_TestCase
+class CoreTest extends \PHPUnit_Framework_TestCase
 {
 	protected $config;
 	protected $core;
 
 	public function setUp() {
-		$this->config = $this->getMockBuilder(__NAMESPACE__ . '\CoreConfig')
+		$this->config = $this->getMockBuilder(CoreConfig::class)
 			->disableOriginalConstructor()
 			->getMock();
 		$this->core = new Core($this->config);

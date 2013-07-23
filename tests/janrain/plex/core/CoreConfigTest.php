@@ -26,7 +26,7 @@ class CoreConfigTest extends \PHPUnit_Framework_TestCase
 		$allKeys = CoreConfig::$REQUIRED_KEYS;
 		$out = array();
 		foreach ($allKeys as $key) {
-			$out[] = array(array_diff(array($key), $allKeys));
+			$out[] = [array_diff([$key], $allKeys)];
 		}
 		return $out;
 	}
