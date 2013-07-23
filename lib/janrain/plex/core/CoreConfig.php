@@ -1,5 +1,5 @@
 <?php
-namespace janrain\plex;
+namespace janrain\plex\core;
 
 use janrain\jump\AbstractConfig;
 

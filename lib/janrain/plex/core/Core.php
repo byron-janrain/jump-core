@@ -1,5 +1,5 @@
 <?php
-namespace janrain\plex;
+namespace janrain\plex\core;
 
 class Core extends AbstractFeature implements RenderableInterface
 {
