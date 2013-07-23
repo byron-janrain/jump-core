@@ -1,5 +1,5 @@
 <?php
-namespace janrain\plex;
+namespace janrain\plex\core;
 
 class CoreConfigTest extends \PHPUnit_Framework_TestCase
 {
