@@ -95,9 +95,9 @@ final class Jump implements plex\RenderableInterface
 
     public function init($data)
     {
-        $coreConfig = jump\ConfigBuilder::build('janrain\\plex\\Core', $data);
-        $core = new plex\Core($coreConfig);
-        $this->features->pushFeature($core);
+        //$coreConfig = jump\ConfigBuilder::build('janrain\\plex\\Core', $data);
+        //$core = new plex\Core($coreConfig);
+        //$this->features->pushFeature($core);
         foreach ($data['features'] as $fName) {
             $fClass = '\\janrain\\plex\\' . strtolower($fName) . "\\$fName";
             $fConfig = jump\ConfigBuilder::build($fClass, $data);
@@ -108,15 +108,6 @@ final class Jump implements plex\RenderableInterface
             $this->features->pushFeature($feature);
         }
     }
-
-    public function doAction($action, plex\Platform $platform)
-    {
-        switch ($action) {
-        default:
-            throw new \Exception("Unsupported action!");
-        }
-    }
-
 
     private function __construct()
     {
