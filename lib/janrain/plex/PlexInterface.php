@@ -3,25 +3,25 @@ namespace janrain\plex;
 
 interface PlexInterface
 {
-	/**
-	 * @return PlexUser|null
-	 *   The PlexUser who is currently logged in or null if there is no logged in user
-	 */
-	public function getLoggedInUser();
+    /**
+     * @return PlexUser|null
+     *   The PlexUser who is currently logged in or null if there is no logged in user
+     */
+    public function getLoggedInUser();
 
-	/**
-	 * @return PlexUser|null
-	 *   Lookup a PlexUser by Janrain UUID
-	 */
-	public function getUserByUuid($uuid);
+    /**
+     * @return PlexUser|null
+     *   Lookup a PlexUser by Janrain UUID
+     */
+    public function getUserByUuid($uuid);
 
-	public function loginUser(\janrain\jump\User $u);
+    public function loginUser(\janrain\jump\User $u);
 
-	public function logoutUser(\janrain\jump\User $u);
+    public function logoutUser(\janrain\jump\User $u);
 
-	public function registerUser(\janrain\jump\User $u);
+    public function registerUser(\janrain\jump\User $u);
 
-	public function getConfig();
+    public function getConfig();
 
-	public function getLocale();
+    public function getLocale();
 }
