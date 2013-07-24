@@ -20,7 +20,7 @@ class Transform {
         $decoded = json_decode($json);
         foreach ($decoded as &$xform) {
             $rc = new \ReflectionClass("\\janrain\\plex\\data\\{$xform->op}");
-            $xform = $rc->newInstanceArgs($xform->j, $xform->p);
+            $xform = $rc->newInstance($xform->j, $xform->p);
             $out->xforms[] = $xform;
         }
         return $out;
