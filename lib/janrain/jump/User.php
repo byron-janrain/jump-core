@@ -1,10 +1,12 @@
 <?php
 namespace janrain\jump;
 
+use janrain\plex\data\Transformable;
+
 /**
  * The fundamental unit of data for Janrain.  The user.
  */
-class User implements Mappable
+class User implements Transformable
 {
     /**
      * @inherit

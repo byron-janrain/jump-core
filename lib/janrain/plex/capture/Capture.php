@@ -74,7 +74,7 @@ class Capture extends AbstractFeature implements RenderableInterface
                     function (result) {
                         console.log('Registration Success!');
                         console.log(result);
-                        janrain.plex.do('register', {token:result.accessToken, uuid:result.userData.uuid});
+                        janrain.plex.do('login', {token:result.accessToken, uuid:result.userData.uuid});
                         janrain.capture.ui.modal.close();
                     });
                 janrain.capture.ui.start();
