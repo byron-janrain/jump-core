@@ -57,7 +57,7 @@ class Intl
             $langProc = $args[1];
             if (is_callable($langProc)) {
                 #pre-processor found, run it this string with this special function
-                $templateString = $langProc($templateString);
+                $args[0] = $langProc($templateString);
                 unset($args[1]);
             }
             #preprocessor run (if needed), all args[0] should be the translation phrase, and all other args should be
