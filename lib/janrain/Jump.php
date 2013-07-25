@@ -93,17 +93,15 @@ final class Jump implements plex\RenderableInterface
         return $this->features->getFeature($name);
     }
 
-    public function init($data)
+    public function init(\ArrayAccess $data)
     {
-        //$coreConfig = jump\ConfigBuilder::build('janrain\\plex\\Core', $data);
-        //$core = new plex\Core($coreConfig);
-        //$this->features->pushFeature($core);
+        #validate $data
+        if (empty($data) || !isset($data['features'])) {
+            throw new \InvalidArgumentException();
+        }
         foreach ($data['features'] as $fName) {
             $fClass = '\\janrain\\plex\\' . strtolower($fName) . "\\$fName";
             $fConfig = jump\ConfigBuilder::build($fClass, $data);
-            if (!class_exists($fClass)) {
-                throw new \UnexpectedValueException("Failed to load class {$fClass}");
-            }
             $feature = new $fClass($fConfig);
             $this->features->pushFeature($feature);
         }
