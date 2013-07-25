@@ -19,7 +19,8 @@ abstract class TransformOp
 
     public function __toString()
     {
-        $className = array_pop(explode('\\', get_class($this)));
+        $cNames = explode('\\', get_class($this));
+        $className = array_pop($cNames);
         $src = json_encode($this->srcName);
         $dest = json_encode($this->destName);
         return sprintf('{"op":"%s","j":%s,"p":%s}', $className, $src, $dest);

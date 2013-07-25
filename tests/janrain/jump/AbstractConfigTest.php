@@ -127,12 +127,4 @@ class AbstractConfigTest extends \PHPUnit_Framework_TestCase
         $mock['key1'] = 'value1';
         $this->assertEquals('{"key1":"value1"}', $mock->__toString());
     }
-
-    /**
-     * @depends testInit
-     */
-    public function testCamelfy($mock)
-    {
-        #
-    }
 }
