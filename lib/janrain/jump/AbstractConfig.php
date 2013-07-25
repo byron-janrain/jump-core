@@ -19,77 +19,79 @@ use \ArrayObject;
  */
 abstract class AbstractConfig implements ArrayAccess, IteratorAggregate, Countable
 {
-	protected $arrayObj;
+    protected $arrayObj;
 
-	public static $REQUIRED_KEYS = array();
+    public static $REQUIRED_KEYS = array();
 
-	public function __construct($data)
-	{
-		$data = $this->flatten((object) $data);
-		$this->arrayObj = new ArrayObject($data, ArrayObject::ARRAY_AS_PROPS);
-		foreach (static::$REQUIRED_KEYS as $key) {
-			if (!$this->offsetExists($key)) {
-				throw new \InvalidArgumentException("Required key \"$key\" not found when instantiating " . get_class($this));
-			}
-		}
-	}
+    public function __construct($data)
+    {
+        $data = $this->flatten((object) $data);
+        $this->arrayObj = new ArrayObject($data, ArrayObject::ARRAY_AS_PROPS);
+        foreach (static::$REQUIRED_KEYS as $key) {
+            if (!$this->offsetExists($key)) {
+                throw new \InvalidArgumentException("Required key \"$key\" not found when instantiating " . get_class($this));
+            }
+        }
+    }
 
-	public function count() {return $this->arrayObj->count();}
+    public function count() {return $this->arrayObj->count();}
 
-	public function getIterator() {return $this->arrayObj->getIterator();}
+    public function getIterator() {return $this->arrayObj->getIterator();}
 
-	public function offsetExists($offset) {return $this->arrayObj->offsetExists($offset);}
-	public function offsetGet($offset) {return $this->arrayObj->offsetExists($offset) ? $this->arrayObj->offsetGet($offset) : null;}
-	public function offsetUnset($offset) {return $this->arrayObj->offsetUnset($offset);}
+    public function offsetExists($offset) {return $this->arrayObj->offsetExists($offset);}
+    public function offsetGet($offset) {return $this->arrayObj->offsetExists($offset) ? $this->arrayObj->offsetGet($offset) : null;}
+    public function offsetUnset($offset) {return $this->arrayObj->offsetUnset($offset);}
 
-	public function offsetSet($offset, $value)
-	{
-		$methodName = 'set' . ucfirst($offset);
-		if (method_exists($this, $methodName)) {
-			#an explicit setter exists, so use it
-			return $this->$methodName($value);
-		} elseif (method_exists($this, '__set')) {
-			#no explicit setter exists, but an implied magic setter does
-			return $this->__set($offset, $value);
-		} else {
-			#nothing special happening here, so proceed as normal.
-			return $this->arrayObj->offsetSet($offset, $value);
-		}
-	}
+    public function offsetSet($offset, $value)
+    {
+        $methodName = 'set' . $this->camelfy($offset);
+        if (method_exists($this, $methodName)) {
+            #an explicit setter exists, so use it
+            return $this->$methodName($value);
+        } elseif (method_exists($this, '__set')) {
+            #no explicit setter exists, but an implied magic setter does
+            return $this->__set($offset, $value);
+        } else {
+            #nothing special happening here, so proceed as normal.
+            return $this->arrayObj->offsetSet($offset, $value);
+        }
+    }
 
-	/**
-	* @todo create naming convention for complex keys
-	*/
-	private function camelfy($string)
-	{
-		$strings = preg_split('|\\W|', $string, null, PREG_SPLIT_NO_EMPTY);
-		array_walk($strings,
-			function (&$val, $key) {
-				$val = ucfirststrtolower($val);
-			});
-	}
-	protected function flatten($jsonDecoded, $path = '', &$out = array())
-	{
-		$type = gettype($jsonDecoded);
+    /**
+    * @todo create naming convention for complex keys
+    */
+    private function camelfy($string)
+    {
+        $strings = preg_split('|\\W|', $string, null, PREG_SPLIT_NO_EMPTY);
+        array_walk($strings,
+            function (&$val, $key) {
+                $val = ucfirst(strtolower($val));
+            });
+        return implode('', $strings);
+    }
 
-		if ('object' != $type) {
-			$out[$path] = $jsonDecoded;
-		} else {
-			foreach ($jsonDecoded as $k => $v) {
-				$newPath = '';
-				if ('object' == $type) {
-					$newPath = $path ? "{$path}->{$k}" : $k;
-				}
-				$this->flatten($v, $newPath, $out);
-			}
-		}
-		return $out;
-	}
+    protected function flatten($jsonDecoded, $path = '', &$out = array())
+    {
+        $type = gettype($jsonDecoded);
 
-	/**
-	* @todo implement this as a reconstruction base on the values
-	*/
-	public function __toString() {
-		return json_encode($this);
-	}
+        if ('object' != $type) {
+            $out[$path] = $jsonDecoded;
+        } else {
+            foreach ($jsonDecoded as $k => $v) {
+                $newPath = '';
+                if ('object' == $type) {
+                    $newPath = $path ? "{$path}->{$k}" : $k;
+                }
+                $this->flatten($v, $newPath, $out);
+            }
+        }
+        return $out;
+    }
+
+    /**
+    * @todo implement this as a reconstruction base on the values
+    */
+    public function __toString() {
+        return json_encode($this->arrayObj);
+    }
 }
