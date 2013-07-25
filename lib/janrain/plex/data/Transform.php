@@ -1,10 +1,6 @@
 <?php
 namespace janrain\plex\data;
 
-use janrain\plex\User as Plexer;
-use janrain\jump\User as Jumper;
-
-
 class Transform {
 
     protected $xforms;
@@ -40,10 +36,10 @@ class Transform {
         return $out;
     }
 
-    public function map(Jumper $j, Plexer $p)
+    public function map(Transformable $src, Transformable $tgt)
     {
         foreach ($this->xforms as $map) {
-            $map($j, $p);
+            $map($src, $tgt);
         }
     }
 }
