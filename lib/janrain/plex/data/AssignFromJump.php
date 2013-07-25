@@ -8,6 +8,6 @@ class AssignFromJump extends TransformOp
 {
     public function __invoke(Jumper $j, Plexer $p)
     {
-        $p[$this->destName] = $j[$this->srcName];
+        $p->offsetSet($this->destName, $j->offsetGet($this->srcName));
     }
 }

@@ -9,9 +9,19 @@ class Transform {
 
     protected $xforms;
 
-    protected function __construct()
+    public function __construct()
     {
         $this->xforms = array();
+    }
+
+    public function addOp(TransformOp $op)
+    {
+        $this->xforms[] = $op;
+    }
+
+    public function getOps()
+    {
+        return new \ArrayIterator($this->xforms);
     }
 
     public static function loadFromJson($json)
@@ -19,7 +29,11 @@ class Transform {
         $out = new Transform();
         $decoded = json_decode($json);
         foreach ($decoded as &$xform) {
-            $rc = new \ReflectionClass("\\janrain\\plex\\data\\{$xform->op}");
+            try {
+                $rc = new \ReflectionClass("\\janrain\\plex\\data\\{$xform->op}");
+            } catch (\ReflectionException $e) {
+                throw new \InvalidArgumentException("Mapping operation {$xform->op} does not exist!", $e->getCode(), $e);
+            }
             $xform = $rc->newInstance($xform->j, $xform->p);
             $out->xforms[] = $xform;
         }

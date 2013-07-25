@@ -4,28 +4,64 @@ namespace janrain\plex\data;
 use janrain\jump\User as Jumper;
 use janrain\plex\User as Plexer;
 
+abstract class TransformPlexer implements Plexer {
+    public function offsetSet($name, $value)
+    {
+        $this->name = $value;
+    }
+    public function offsetGet($name)
+    {
+        return isset($this->name) ? $this->name : null;
+    }
+}
+
 class TransformTest extends \PHPUnit_Framework_TestCase
 {
+    protected $uuid;
+    protected $jumper;
+    protected $plexer;
 
-
-    public function testAssignFromJumpMapping()
+    public function setUp()
     {
-        $uuid = `uuidgen`;
-        $jumper = Jumper::__set_state(['uuid'=>$uuid]);
-        $plexer = $this->getMock(Plexer::class);
-        $plexer->expects($this->once())
-            ->method('offsetSet')
-            ->with($this->equalTo('jump_id'), $this->equalTo($uuid));
-        $plexer->expects($this->once())
-            ->method('offsetGet')
-            ->will($this->returnValue($uuid));
+        $this->jumper = Jumper::__set_state(['uuid' => `uuidgen`]);
+        $this->plexer = $this->getMockForAbstractClass(TransformPlexer::class);
+    }
 
-        $map = new AssignFromJump('uuid', 'jump_id');
+    public function testBuildMapping()
+    {
+        $xform = new Transform();
+        $xform->addOp(new AssignFromJump('uuid', 'jump_id'));
+        $ops = $xform->getOps();
+        $this->assertInstanceOf(\ArrayIterator::class, $ops);
+        foreach ($ops as $op) {
+            $this->assertInstanceOf(TransformOp::class, $op);
+        }
+        return $xform;
+    }
 
-        #maps always assume jumper, plexer
-        $map($jumper, $plexer);
+    /**
+     * @depends testBuildMapping
+     */
+    public function testMapping($xform)
+    {
+        $this->assertNotEquals($this->jumper['uuid'], $this->plexer->offsetGet('jump_id'));
+        $xform->map($this->jumper, $this->plexer);
+        $this->assertEquals($this->jumper['uuid'], $this->plexer->offsetGet('jump_id'));
+    }
 
-        $this->assertEquals($jumper['uuid'], $plexer['jump_id']);
+    public function testBuildMappingFromJson()
+    {
+        $json = '[{"op":"AssignFromJump","j":"jf","p":"pf"},{"op":"AssignFromJump","j":"jf2","p":"pf2"}]';
+        $xform = Transform::loadFromJson($json);
+        $this->assertEquals(2, count($xform->getOps()));
+    }
 
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testInvalidMappingFromJson()
+    {
+        $json = '[{"op":"AssignFromJumper","j":"jf","p":"pf"},{"op":"AssignFromJump","j":"jf2","p":"pf2"}]';
+        $xform = Transform::loadFromJson($json);
     }
 }
