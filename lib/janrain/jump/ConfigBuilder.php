@@ -3,7 +3,7 @@ namespace janrain\jump;
 
 class ConfigBuilder
 {
-	public static function build($featureClassName, $data)
+	public static function build($featureClassName, \ArrayAccess $data)
 	{
 		$configName = $featureClassName . 'Config';
 		if (!is_subclass_of($configName, 'janrain\jump\AbstractConfig')) {
