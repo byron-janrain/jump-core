@@ -1,8 +1,6 @@
 <?php
 namespace janrain\jump;
 
-use \ArrayObject;
-
 class CaptureApiTest extends \PHPUnit_Framework_TestCase
 {
     protected $config;
@@ -32,7 +30,7 @@ class CaptureApiTest extends \PHPUnit_Framework_TestCase
     {
         $api = new CaptureApi($this->config);
         $answer = $api->fetchUserByUuid('e2c9174b-0904-4757-a15a-f3d8d149983a');
-        $this->assertInstanceof(\janrain\jump\User::class, $answer);
+        $this->assertInstanceof(User::class, $answer);
     }
 
     public function testGenerateUuid()
