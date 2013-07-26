@@ -16,14 +16,12 @@
 	"require-dev": {
 		"php": ">=5.5.0",
 		"phpunit/phpunit": "*",
-		"apigen/apigen": "2.8.0"
+		"sami/sami": "*"
 	},
 	"scripts": {
-		"post-install-cmd": [
-			"apigen.php  --source ./lib --destination docs --php no"
-		],
 		"post-update-cmd": [
-			"clear && ./vendor/bin/phpunit --coverage-html coverage"
+			"./vendor/bin/phpunit --coverage-html coverage",
+			"./vendor/bin/sami.php update ./sami_config.php"
 		]
 	}
 }
