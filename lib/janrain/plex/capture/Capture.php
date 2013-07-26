@@ -7,6 +7,7 @@ use janrain\plex\Renderable;
 class Capture extends AbstractFeature implements Renderable
 {
     protected $config;
+    protected $api;
 
     public function __construct(CaptureConfig $c)
     {
@@ -144,6 +145,6 @@ class Capture extends AbstractFeature implements Renderable
             $apiConfig = new \janrain\jump\CaptureApiConfig($this->config);
             $this->api = new \janrain\jump\CaptureApi($apiConfig);
         }
-        return $api;
+        return $this->api;
     }
 }
