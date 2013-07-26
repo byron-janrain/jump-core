@@ -27,4 +27,9 @@ abstract class AbstractFeature
     }
 
     abstract public function getPriority();
+
+    public function setConfigItem($key, $value)
+    {
+        return $this->config[$key] = $value;
+    }
 }

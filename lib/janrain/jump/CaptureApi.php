@@ -33,7 +33,8 @@ class CaptureApi
         }
         $this->ctx['http']['content'] = http_build_query($params);
         $stream = stream_context_create($this->ctx);
-        $resp = json_decode(file_get_contents($this->url . $endpoint, false, $stream), true);
+        $rawResp = file_get_contents($this->url . $endpoint, false, $stream);
+        $resp = json_decode($rawResp, true);
         if (empty($resp['stat']) || $resp['stat'] == 'error') {
             throw new \Exception($resp['error_description']);
         }
