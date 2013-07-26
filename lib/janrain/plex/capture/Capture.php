@@ -49,14 +49,6 @@ class Capture extends AbstractFeature implements Renderable
             opts.tokenUrl = document.location.href;
             opts.tokenAction = 'event';
             opts.plex.loadJsUrl = '//d29usylhdk1xyu.cloudfront.net/load/.default';\n";
-        if (isset($this->config['capture.session'])) {
-            $token = $this->config['capture.session']->token;
-            $expires = gmdate('D, j M Y H:i:s', $this->config['capture.session']->expires) . ' GMT';
-            $out .=
-                "window.localStorage.setItem('janrainCaptureToken', '{$token}');
-                window.localStorage.setItem('janrainCaptureToken_Expires', '{$expires}');\n";
-        }
-
         return $out . "//End Capture Settings\n";
     }
 
@@ -65,7 +57,19 @@ class Capture extends AbstractFeature implements Renderable
      */
     public function getEndHeadJs()
     {
-        $out =
+        $out = '';
+        if ($captureSession = $this->config['capture.session']) {
+            $token = $captureSession->token;
+            $expires = gmdate('D, j M Y H:i:s', $captureSession->expires) . ' GMT';
+            $out .=
+                "window.localStorage.setItem('janrainCaptureToken', '{$token}');
+                window.localStorage.setItem('janrainCaptureToken_Expires', '{$expires}');\n";
+        } else {
+            $out .=
+                "window.localStorage.removeItem('janrainCaptureToken');
+                window.localStorage.removeItem('janrainCaptureToken_Expires');\n";
+        }
+        $out .=
             "function janrainCaptureWidgetOnLoad() {
                 janrain.events.onCaptureLoginSuccess.addHandler(
                     function (result) {
