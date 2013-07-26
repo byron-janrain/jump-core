@@ -20,11 +20,10 @@
 	},
 	"scripts": {
 		"post-install-cmd": [
-			"apigen.php  --source ./lib --destination docs --php no",
-			"phpunit --coverage-html coverage"
+			"apigen.php  --source ./lib --destination docs --php no"
 		],
 		"post-update-cmd": [
-			"phpunit --coverage-html coverage"
+			"clear && ./vendor/bin/phpunit --coverage-html coverage"
 		]
 	}
 }
