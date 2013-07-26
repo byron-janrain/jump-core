@@ -2,9 +2,9 @@
 namespace janrain\plex\capture;
 
 use janrain\plex\AbstractFeature;
-use janrain\plex\RenderableInterface;
+use janrain\plex\Renderable;
 
-class Capture extends AbstractFeature implements RenderableInterface
+class Capture extends AbstractFeature implements Renderable
 {
     protected $config;
 

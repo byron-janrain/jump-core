@@ -12,6 +12,9 @@ class FeatureStack implements \IteratorAggregate, \Countable
     protected $names;
     protected $features;
 
+    /**
+     * Create a new FeatureStack
+     */
     public function __construct()
     {
         $this->names = array();
@@ -19,7 +22,10 @@ class FeatureStack implements \IteratorAggregate, \Countable
     }
 
     /**
+     * Add a feature to the stack.
      *
+     * @param AbstractFeature
+     *   The feature to add to the stack.  Will overwrite previously added features of the same name.
      */
     public function pushFeature(AbstractFeature $f)
     {
@@ -47,7 +53,7 @@ class FeatureStack implements \IteratorAggregate, \Countable
     }
 
     /**
-     * {@inheritsDoc}
+     * implements \IteratorAggregate
      */
     public function getIterator()
     {
@@ -56,7 +62,7 @@ class FeatureStack implements \IteratorAggregate, \Countable
     }
 
     /**
-     * {@inheritsDoc}
+     * implements \Countable
      */
     public function count()
     {

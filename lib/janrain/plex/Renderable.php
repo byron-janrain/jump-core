@@ -4,7 +4,7 @@ namespace janrain\plex;
 /**
  * This interface represents the pre-render contract for all renderable Plex features.
  */
-interface RenderableInterface {
+interface Renderable {
 
     /**
      * Get an array of external scripts.  Likely these will be dependent libraries and should be rendered by the CMS prior to

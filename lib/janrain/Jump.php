@@ -2,8 +2,9 @@
 namespace janrain;
 
 use janrain\plex\Core;
+use janrain\plex\Renderable;
 
-final class Jump implements plex\RenderableInterface
+final class Jump implements Renderable
 {
     private $features;
 
@@ -16,7 +17,9 @@ final class Jump implements plex\RenderableInterface
     {
         $out = array();
         foreach ($this->features as $f) {
-            $out = array_merge($out, $f->getHeadJsSrcs());
+            if ($f instanceof Renderable) {
+                $out = array_merge($out, $f->getHeadJsSrcs());
+            }
         }
         return $out;
     }
@@ -27,26 +30,42 @@ final class Jump implements plex\RenderableInterface
     public function getStartHeadJs() {
         $out = '';
         foreach ($this->features as $f) {
-            $out .= $f->getStartheadJs();
+            if ($f instanceof Renderable) {
+                $out .= $f->getStartheadJs();
+            }
         }
         return $out;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getSettingsHeadJs() {
         $out = '';
         foreach ($this->features as $f) {
-            $out .= $f->getSettingsHeadJs();
+            if ($f instanceof Renderable) {
+                $out .= $f->getSettingsHeadJs();
+            }
         }
         return $out;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getEndHeadJs() {
         $out = '';
         foreach ($this->features as $f) {
-            $out .= $f->getEndHeadJs();
+            if ($f instanceof Renderable) {
+                $out .= $f->getEndHeadJs();
+            }
         }
         return $out;
     }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getCssHrefs() {
         $out = array();
         foreach ($this->features as $f) {
@@ -54,6 +73,10 @@ final class Jump implements plex\RenderableInterface
         }
         return $out;
     }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getCss() {
         $out = '';
         foreach ($this->features as $f) {
@@ -61,10 +84,17 @@ final class Jump implements plex\RenderableInterface
         }
         return $out;
     }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getHtml() {
         return '';
     }
 
+    /**
+     * Convenience method to render the entire header content in one big batch.
+     */
     public function raw_render()
     {
         $out = "<!-- START Janrain JUMP -->\n";
@@ -86,16 +116,34 @@ final class Jump implements plex\RenderableInterface
         return $out;
     }
 
+    /**
+     * Get the full FeatureStack for bulk operations or manual manipulation
+     *
+     * @return FeatureStack
+     *   Returns the current feature stack
+     */
     public function getFeatures()
     {
         return $this->features;
     }
 
-    public function getFeature($name)
+    /**
+     * Convenience method for getting a specific feature by short-name
+     *
+     * @param string
+     *   The short class name of the target feature.
+     */
+    public function getFeature($shortName)
     {
-        return $this->features->getFeature($name);
+        return $this->features->getFeature($shortName);
     }
 
+    /**
+     * Initialize this Jump object from configuration data.
+     *
+     * @param ArrayAccess
+     *   An array accessible set of configuration data.  Likely janrain\plex\Config
+     */
     public function init(\ArrayAccess $data)
     {
         #validate $data
@@ -110,16 +158,22 @@ final class Jump implements plex\RenderableInterface
         }
     }
 
-    private function __construct()
-    {
-        $this->features = new plex\FeatureStack();
-    }
-    private static $instance;
+    /**
+     * Get an instance of jump.  Best if followed up by init() as soon as possible.
+     *
+     * @return Jump
+     *   Returns an uninitialized Jump instance
+     */
     public static function getInstance()
     {
         if (empty(self::$instance)) {
             self::$instance = new self();
         }
         return self::$instance;
+    }
+    private static $instance;
+    private function __construct()
+    {
+        $this->features = new plex\FeatureStack();
     }
 }

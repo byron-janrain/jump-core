@@ -2,9 +2,9 @@
 namespace janrain\plex\core;
 
 use janrain\plex\AbstractFeature;
-use janrain\plex\RenderableInterface;
+use janrain\plex\Renderable;
 
-class Core extends AbstractFeature implements RenderableInterface
+class Core extends AbstractFeature implements Renderable
 {
     protected $config;
 
