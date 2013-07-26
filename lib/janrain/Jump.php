@@ -21,6 +21,9 @@ final class Jump implements plex\RenderableInterface
         return $out;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getStartHeadJs() {
         $out = '';
         foreach ($this->features as $f) {

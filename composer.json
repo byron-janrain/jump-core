@@ -16,12 +16,15 @@
 	"require-dev": {
 		"php": ">=5.5.0",
 		"phpunit/phpunit": "*",
-		"apigen/apigen": "*"
+		"apigen/apigen": "2.8.0"
 	},
 	"scripts": {
 		"post-install-cmd": [
-			"./vendor/bin/apigen.php  --source ./lib --destination docs --php no",
-			"./vendor/bin/phpunit --coverage-html coverage"
+			"apigen.php  --source ./lib --destination docs --php no",
+			"phpunit --coverage-html coverage"
+		],
+		"post-update-cmd": [
+			"phpunit --coverage-html coverage"
 		]
 	}
 }

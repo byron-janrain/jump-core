@@ -35,12 +35,17 @@ class CaptureApiTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceof(\janrain\jump\User::class, $answer);
     }
 
-    public function configProvider()
-    {
-    }
-
     public function testGenerateUuid()
     {
         $uuid = CaptureApi::generateUuid();
+        $this->assertInternalType('string', $uuid);
+    }
+
+    public function testGetToken()
+    {
+        $api = new CaptureApi($this->config);
+        $token = $api->getToken('e2c9174b-0904-4757-a15a-f3d8d149983a');
+        $this->assertObjectHasAttribute('token', $token);
+        $this->assertObjectHasAttribute('expires', $token);
     }
 }

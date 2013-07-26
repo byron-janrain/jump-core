@@ -65,6 +65,16 @@ class CaptureApi
         return $user;
     }
 
+    public function getToken($uuid)
+    {
+        $resp = $this('access/getAccessToken', array('uuid' => $uuid, 'type_name' => 'user'));
+        $out = new \stdClass();
+        $out->token = $resp['accessToken'];
+        //token expires in 1 hour, so lets give a 5 minute window where it can renew a tad early.
+        $out->expires = time() + 60 * 55;
+        return $out;
+    }
+
     public static function generateUuid()
     {
         if (function_exists('openssl_random_pseudo_bytes')) {

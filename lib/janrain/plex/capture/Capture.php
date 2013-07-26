@@ -47,9 +47,16 @@ class Capture extends AbstractFeature implements RenderableInterface
             /*TODO: remove by default.  allow engage to set this if it needs it.*/
             opts.tokenUrl = document.location.href;
             opts.tokenAction = 'event';
-            opts.plex.loadJsUrl = '//d29usylhdk1xyu.cloudfront.net/load/.default';
-            //End Capture Settings\n";
-        return $out;
+            opts.plex.loadJsUrl = '//d29usylhdk1xyu.cloudfront.net/load/.default';\n";
+        if (isset($this->config['capture.session'])) {
+            $token = $this->config['capture.session']->token;
+            $expires = gmdate('D, j M Y H:i:s', $this->config['capture.session']->expires) . ' GMT';
+            $out .=
+                "window.localStorage.setItem('janrainCaptureToken', '{$token}');
+                window.localStorage.setItem('janrainCaptureToken_Expires', '{$expires}');\n";
+        }
+
+        return $out . "//End Capture Settings\n";
     }
 
     /**
@@ -133,8 +140,10 @@ class Capture extends AbstractFeature implements RenderableInterface
 
     public function getApi()
     {
-        $apiConfig = new \janrain\jump\CaptureApiConfig($this->config);
-        $api = new \janrain\jump\CaptureApi($apiConfig);
+        if (empty($this->api)) {
+            $apiConfig = new \janrain\jump\CaptureApiConfig($this->config);
+            $this->api = new \janrain\jump\CaptureApi($apiConfig);
+        }
         return $api;
     }
 }
