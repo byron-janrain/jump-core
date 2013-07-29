@@ -85,4 +85,10 @@ class JumpTest extends \PHPUnit_Framework_TestCase
         $jump->init($data);
         $raw_render = $jump->raw_render();
     }
+
+    public function testGetHtml()
+    {
+        $jump = Jump::getInstance();
+        $this->assertSame('', $jump->getHtml());
+    }
 }
