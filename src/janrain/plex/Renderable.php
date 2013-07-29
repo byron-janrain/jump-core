@@ -11,53 +11,59 @@ interface Renderable {
      * the getStartHeadJs(), getSettingsHeadJs(), getEndHeadJs() chain.
      *
      * @return Array
+     *   An array of external script sources.  Empty array if not needed.
      */
     public function getHeadJsSrcs();
 
     /**
      * Start the JS Output. The string representing the start of JUMP javascript to be placed within HTML Head tag.
-     * Does not contain opening <script>.  If this Renderable doesn't require JS, this should return empty string.
+     * Does not contain opening <script>.
+     *
      * @return string
+     *   Empty string if not needed.
      */
     public function getStartHeadJs();
 
     /**
      * Get the javascript settings for this Renderable JUMP object. A block of settings in the form
-     * "janrain.settings.package.option = 'value'\n". Empty string is returned if no settings are needed.
+     * "janrain.settings.package.option = 'value'\n".
      *
      * @return string
-     *
+     *   Empty string if no settings required.
      */
     public function getSettingsHeadJs();
 
     /**
      * Get the closing javascript content and load.js src. The closing block of head javascript.
-     * Does not include a </script>.  If no JS required, this returns empty string.
+     * Does not include a </script>.
      *
      * @return string
+     *   Empty string if not needed.
      */
     public function getEndHeadJs();
 
     /**
-     * Get the hrefs of the external CSS this renderable requires. If renderable does not depend on any external css files
-     * an empty array is returned.
+     * Get the hrefs of the external CSS this renderable requires.
      *
      * @return Array
+     *   A list of hrefs to be included by the platform or wrapped by the renderer in link tags.  Empty array if not needed.
      */
     public function getCssHrefs();
 
     /**
-     * Get the inline style needed for this renderable. Does not include opening or closing style tags.  Returns empty string
-     * if no styles needed.
+     * Get the inline style needed for this renderable.
      *
-     * @return string   sup
+     * @return string
+     *   Raw css to be added to the page.  Does not include opening or closing style tags.  Empty string if no css needed.
      */
     public function getCss();
 
     /**
-     * Get the body content of this Renderable. Returns html markup, or empty string.
+     * Get the body content of this Renderable.
      *
      * @return string
+     *   The markup to be added to page body (usually invisible divs for modals and widgets). Empty string if no body content
+     *   is necessary.
      */
     public function getHtml();
 }
