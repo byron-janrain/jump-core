@@ -8,11 +8,15 @@ interface Platform
     /**
      * Return configuration data from this platform.
      *
-     * @return ArrayAccess
+     * @return janrain\jump\AbstractConfig
      */
     public function getConfig();
 
     public function getLocale();
 
     public function fetchPlexerForJumper(Jumper $j);
+
+    public function registerJumper(Jumper $j);
+
+    public function loginJump(Jumper $j);
 }

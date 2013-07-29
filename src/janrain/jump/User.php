@@ -92,7 +92,12 @@ class User implements data\Transformable
      */
     protected function __construct()
     {
-        $this->uuid = strtolower(Api::generateUuid());
+        $this->uuid = strtolower(\janrain\jump\CaptureApi::generateUuid());
+    }
+
+    public static function create()
+    {
+        return new static;
     }
 
     /**
@@ -112,7 +117,8 @@ class User implements data\Transformable
      */
     public function getMappableFields()
     {
-
+        $arr = (array) $this;
+        return array_keys($arr);
     }
 
     /**

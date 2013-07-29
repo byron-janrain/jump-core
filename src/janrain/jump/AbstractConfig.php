@@ -1,11 +1,6 @@
 <?php
 namespace janrain\jump;
 
-use \ArrayAccess;
-use \IteratorAggregate;
-use \Countable;
-use \ArrayObject;
-
 /**
  * Configuration handler template class.
  *
@@ -17,7 +12,7 @@ use \ArrayObject;
  *
  * @todo Create a generic subclass for testing this explicitly
  */
-abstract class AbstractConfig implements ArrayAccess, IteratorAggregate, Countable
+abstract class AbstractConfig implements \ArrayAccess, \IteratorAggregate, \Countable
 {
     protected $arrayObj;
 
@@ -26,7 +21,7 @@ abstract class AbstractConfig implements ArrayAccess, IteratorAggregate, Countab
     public function __construct($data)
     {
         $data = $this->flatten((object) $data);
-        $this->arrayObj = new ArrayObject($data, ArrayObject::ARRAY_AS_PROPS);
+        $this->arrayObj = new \ArrayObject($data, \ArrayObject::ARRAY_AS_PROPS);
         foreach (static::$REQUIRED_KEYS as $key) {
             if (!$this->offsetExists($key)) {
                 throw new \InvalidArgumentException("Required key \"$key\" not found when instantiating " . get_class($this));

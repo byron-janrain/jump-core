@@ -44,9 +44,9 @@ class CaptureTest extends \PHPUnit_Framework_TestCase
     {
         //var_dump($config);
         $captureConf = new CaptureConfig($config);
-        var_dump($captureConf);
+        //var_dump($captureConf);
         $capture = new Capture($captureConf);
-        var_dump($capture);
+        //var_dump($capture);
         $this->assertInternalType('string', $capture->getEndHeadJs());
     }
 

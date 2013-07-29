@@ -3,6 +3,12 @@ namespace janrain\jump;
 
 class UserTest extends \PHPUnit_Framework_TestCase
 {
+    public function testCreateNew()
+    {
+        $user = User::create();
+        $this->assertInstanceOf(User::class, $user);
+    }
+
     /**
      * @expectedException PHPUnit_Framework_Error
      */
@@ -72,6 +78,25 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $user = User::__set_state($data);
         $user['/plural#2/index'] = 5;
         $this->assertEquals(5, $user->plural[1]['index']);
+    }
+
+    /**
+     * @dataProvider generateGoodData
+     */
+    public function testOffsetUnsetDoesNothing($data)
+    {
+        $user = User::__set_state($data);
+        unset($user['/plural#2/index']);
+        $this->assertEquals(2, $user['/plural#2/index']);
+    }
+
+    /**
+     * @dataProvider generateGoodData
+     */
+    public function testGetMappableFields($data)
+    {
+        $user = User::__set_state($data);
+        $this->assertEquals(array_keys($data), $user->getMappableFields());
     }
 
     /**

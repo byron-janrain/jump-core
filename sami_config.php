@@ -1,6 +1,6 @@
 <?php
 return new \Sami\Sami(
-    './lib',
+    './src',
     [
         'build_dir' => __DIR__ . '/docs',
         'cache_dir' => __DIR__ . '/docs/cache',
