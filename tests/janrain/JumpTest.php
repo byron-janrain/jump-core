@@ -61,7 +61,7 @@ class JumpTest extends \PHPUnit_Framework_TestCase
         $jump = Jump::getInstance();
         $jump->init($data);
         $features = $jump->getFeatures();
-        $this->assertInstanceOf(plex\FeatureStack::class, $features);
+        $this->assertInstanceOf(jump\FeatureStack::class, $features);
     }
 
 
