@@ -48,7 +48,7 @@ class Capture extends AbstractFeature implements Renderable
             /*TODO: remove by default.  allow engage to set this if it needs it.*/
             opts.tokenUrl = document.location.href;
             opts.tokenAction = 'event';
-            opts.plex.loadJsUrl = '//d29usylhdk1xyu.cloudfront.net/load/.default';\n";
+            opts.plex.loadJsUrl = '//rpxnow.com/load/.default';\n";
         return $out . "//End Capture Settings\n";
     }
 
