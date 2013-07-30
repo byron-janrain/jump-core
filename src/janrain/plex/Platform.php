@@ -18,5 +18,5 @@ interface Platform
 
     public function registerJumper(Jumper $j);
 
-    public function loginJump(Jumper $j);
+    public function loginJumper(Jumper $j);
 }
