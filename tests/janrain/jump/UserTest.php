@@ -3,126 +3,81 @@ namespace janrain\jump;
 
 class UserTest extends \PHPUnit_Framework_TestCase
 {
-    public function testCreateNew()
-    {
-        $user = User::create();
-        $this->assertInstanceOf(User::class, $user);
-    }
 
     /**
      * @expectedException PHPUnit_Framework_Error
      */
-    public function testCreateNoData()
+    public function testCreate($data)
     {
-        $user = User::__set_state();
+        $jumper = User::create($data);
     }
 
     /**
-     * @expectedException Exception
-     */
-    public function testCreateFailsWithoutUuid()
-    {
-        $user = User::__set_state(['name' => 'Murphy']);
-    }
-
-    public function testGetId()
-    {
-        $uuid = strtolower(`uuidgen`);
-        $u = User::__set_state(['uuid' => $uuid]);
-        $this->assertEquals($uuid, $u->getId());
-    }
-
-    /**
-     * @dataProvider generateGoodData
-     */
-    public function testGetProperty($data)
-    {
-        $user = User::__set_state($data);
-        $this->assertEquals($data['uuid'], $user->uuid);
-        $this->assertEquals($data['uuid'], $user['uuid']);
-    }
-
-    /**
-     * @dataProvider generateGoodData
-     */
-    public function testGetMissingPropertyReturnsNull($data)
-    {
-        $user = User::__set_state($data);
-        $this->assertNull($user['thereisnospoon']);
-        $this->assertNull($user['/thereisnospoon']);
-    }
-
-    /**
-     * @dataProvider generateGoodData
-     */
-    public function testGetNestedProperty($data)
-    {
-        $user = User::__set_state($data);
-        $this->assertEquals($data['plural'][0]['index'], $user['/plural#1/index']);
-    }
-
-    /**
-     * @dataProvider generateGoodData
-     */
-    public function testGetMissingNestedPropertyReturnsNull($data)
-    {
-        $user = User::__set_state($data);
-        $this->assertNull($user['/plural#3']);
-    }
-
-    /**
-     * @dataProvider generateGoodData
-     */
-    public function testSetNestedProperty($data)
-    {
-        $user = User::__set_state($data);
-        $user['/plural#2/index'] = 5;
-        $this->assertEquals(5, $user->plural[1]['index']);
-    }
-
-    /**
-     * @dataProvider generateGoodData
-     */
-    public function testOffsetUnsetDoesNothing($data)
-    {
-        $user = User::__set_state($data);
-        unset($user['/plural#2/index']);
-        $this->assertEquals(2, $user['/plural#2/index']);
-    }
-
-    /**
-     * @dataProvider generateGoodData
-     */
-    public function testGetMappableFields($data)
-    {
-        $user = User::__set_state($data);
-        $this->assertEquals(array_keys($data), $user->getMappableFields());
-    }
-
-    /**
-     * @dataProvider generateGoodData
      * @expectedException InvalidArgumentException
      */
-    public function testSetNestedPropertyBadPath($data)
+    public function testSetStateNoUuid()
     {
-        $user = User::__set_state($data);
-        $user['/thereisnospoon'] = 'value';
+        $jumper = User::__set_state([]);
     }
 
-    public function generateGoodData()
+    /**
+    * @dataProvider getData
+    */
+    public function testSetState($data)
     {
+        $jumper = User::__set_state($data);
+        $this->assertInstanceOf(User::class, $jumper);
+    }
+
+    /**
+    * @dataProvider getData
+    */
+    public function testGetAttributePaths($data, $paths)
+    {
+        $jumper = User::__set_state($data);
+        $this->assertEquals($paths, $jumper->getAttributePaths());
+    }
+
+    /**
+     * @dataProvider getData
+     */
+    public function testSetAttribute($data)
+    {
+        $jumper = User::__set_state($data);
+        $jumper->setAttribute('/name/first', 'TesterToo');
+        $this->assertEquals('TesterToo', $jumper->getAttribute('/name/first'));
+        $jumper->setAttribute('/bob', 'bob');
+        $this->assertEquals(null, $jumper->getAttribute('/bob'));
+    }
+
+    /**
+     * @dataProvider getData
+     */
+    public function testGetAttribute($data)
+    {
+        $jumper = User::__set_state($data);
+        $firstname = $jumper->getAttribute('/name/first');
+        $this->assertEquals('Tester', $firstname);
+        $this->assertEquals(null, $jumper->getAttribute('/thereisnospoon'));
+        $this->assertEquals(null, $jumper->getAttribute('thereisnospoon'));
+    }
+
+    /**
+     * @dataProvider getData
+     */
+    public function testHasAttribute($data)
+    {
+        $jumper = User::__set_state($data);
+        $this->assertEquals(true, $jumper->hasAttribute('/uuid'));
+        $this->assertEquals(false, $jumper->hasAttribute('uuid'));
+    }
+
+    public function getData()
+    {
+        $testJson = '{"name":{"first":"Tester","last":"Testerton"},"uuid":12345,"somes":["stuff1","stuff2","stuff3"]}';
+        $obj = json_decode($testJson, true);
         return [
-            [
-                [
-                    'uuid' => strtolower(`uuidgen`),
-                    'email' => 'jumper@janrain.com',
-                    'nested' => ['property' => 'value'],
-                    'plural' => [
-                        ['index' => 1],
-                        ['index' => 2],
-                    ],
-                ]
-            ],
-        ];
+            [$obj, ['/name','/name/first', '/name/last', '/uuid','/somes','/somes#1','/somes#2', '/somes#3']],
+            ];
     }
 }

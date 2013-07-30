@@ -1,7 +1,7 @@
 <?php
 namespace janrain\jump\data;
 
-interface Transformable extends \ArrayAccess
+interface Transformable
 {
     /**
     * Get a list of mappable fields (such as to populate a dropdown ui)
@@ -9,5 +9,13 @@ interface Transformable extends \ArrayAccess
     * @return Array
     *   An array of field names.
     */
-    public function getMappableFields();
+    #public function getMappableFields();
+
+    public function setAttribute($key, $value);
+
+    public function getAttribute($key);
+
+    public function hasAttribute($key);
+
+    public function getAttributePaths();
 }

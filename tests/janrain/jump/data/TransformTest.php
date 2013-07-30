@@ -30,7 +30,7 @@ class TransformTest extends \PHPUnit_Framework_TestCase
     public function testBuildMapping()
     {
         $xform = new Transform();
-        $xform->addOp(new AssignFromJump('uuid', 'jump_id'));
+        $xform->addOp(new AssignFromJump('/uuid', 'jump_id'));
         $ops = $xform->getOps();
         $this->assertInstanceOf(\ArrayIterator::class, $ops);
         foreach ($ops as $op) {
@@ -44,9 +44,9 @@ class TransformTest extends \PHPUnit_Framework_TestCase
      */
     public function testMapping($xform)
     {
-        $this->assertNotEquals($this->jumper['uuid'], $this->plexer->offsetGet('jump_id'));
+        $this->assertNotEquals($this->jumper->getAttribute('/uuid'), $this->plexer->offsetGet('jump_id'));
         $xform->map($this->jumper, $this->plexer);
-        $this->assertEquals($this->jumper['uuid'], $this->plexer->offsetGet('jump_id'));
+        $this->assertEquals($this->jumper->getAttribute('/uuid'), $this->plexer->offsetGet('jump_id'));
     }
 
     public function testBuildMappingFromJson()
