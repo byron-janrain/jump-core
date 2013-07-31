@@ -9,14 +9,15 @@ class CaptureApi extends AbstractFeature
     protected $conf;
     protected $ctx;
     protected $url;
+    protected $reqHeaders;
 
     public function __construct(CaptureApiConfig $conf) {
         $this->conf = $conf;
-        $this->data = array();
+        $this->reqHeaders = array();
         $this->ctx = array(
             'http' => array(
                 'method' => 'POST',
-                'header' => array("Accept-Encoding: identity", "Content-type: application/x-www-form-urlencoded"),
+                'header' => "Accept-Encoding: identity\r\n" . "Content-type: application/x-www-form-urlencoded\r\n"
                 ));
         $this->url = $this->conf['capture.captureServer'];
         if ($this->url[(strlen($this->url) - 1)] !== '/') {
@@ -28,19 +29,22 @@ class CaptureApi extends AbstractFeature
      * Make a call against
      */
     public function __invoke($endpoint, $params, $token = null) {
-        $params = array_merge($this->data, $params);
         if ($token) {
-            $this->ctx['http']['header'][] = "Authorization: OAuth {$token}";
+            $this->reqHeaders[] = "Authorization: OAuth {$token}";
         } else {
             $this->signRequest($endpoint, $params);
         }
-        $this->ctx['http']['content'] = http_build_query($params);
-        $stream = stream_context_create($this->ctx);
+        #copy the array;
+        $ctx = $this->ctx;
+        $ctx['http']['content'] = http_build_query($params);
+        $ctx['http']['header'] .= implode("\r\n", $this->reqHeaders) . "\r\n";
+        $stream = stream_context_create($ctx);
         $rawResp = file_get_contents($this->url . $endpoint, false, $stream);
         $resp = json_decode($rawResp, true);
         if (empty($resp['stat']) || $resp['stat'] == 'error') {
             throw new \Exception($resp['error_description']);
         }
+        $this->reqHeaders = array();
         return isset($resp['result']) ? $resp['result'] : $resp;
     }
 
@@ -49,14 +53,14 @@ class CaptureApi extends AbstractFeature
         #no token found, use message signing so we never transfer the client_secret
         ksort($params);
         $timeStr = gmdate('Y-m-d H:i:s');
-        $this->ctx['http']['header'][] = "Date: {$timeStr}";
+        $this->reqHeaders[] = "Date: {$timeStr}";
         $data = "/{$url}\n{$timeStr}\n";
         foreach ($params as $k => $v) {
             $data .= "{$k}={$v}\n";
         }
         $rawDigest = hash_hmac('sha1', $data, $this->conf['capture.client_secret'], true);
         $b64 = base64_encode($rawDigest);
-        $this->ctx['http']['header'][] = "Authorization: Signature {$this->conf['capture.clientId']}:{$b64}";
+        $this->reqHeaders[] = "Authorization: Signature {$this->conf['capture.clientId']}:{$b64}";
     }
 
     /**
@@ -82,7 +86,6 @@ class CaptureApi extends AbstractFeature
     public function getUserSchema()
     {
         $resp = $this('entityType', array('type_name' => 'user'));
-        var_dump($resp);
         return $resp;
     }
 
