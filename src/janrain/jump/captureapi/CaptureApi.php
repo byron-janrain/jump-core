@@ -1,7 +1,10 @@
 <?php
-namespace janrain\jump;
+namespace janrain\jump\captureapi;
 
-class CaptureApi
+use janrain\jump\AbstractFeature;
+use janrain\jump\User;
+
+class CaptureApi extends AbstractFeature
 {
     protected $conf;
     protected $ctx;
@@ -91,5 +94,10 @@ class CaptureApi
             throw new \Exception();
         }
         return $uuid;
+    }
+
+    public function getPriority()
+    {
+        return 0;
     }
 }

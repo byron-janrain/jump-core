@@ -146,8 +146,8 @@ class Capture extends AbstractFeature implements Renderable
     public function getApi()
     {
         if (empty($this->api)) {
-            $apiConfig = new \janrain\jump\CaptureApiConfig($this->config);
-            $this->api = new \janrain\jump\CaptureApi($apiConfig);
+            $apiConfig = new \janrain\jump\captureapi\CaptureApiConfig($this->config);
+            $this->api = new \janrain\jump\captureapi\CaptureApi($apiConfig);
         }
         return $this->api;
     }

@@ -1,5 +1,7 @@
 <?php
-namespace janrain\jump;
+namespace janrain\jump\captureapi;
+
+use janrain\jump\User;
 
 class CaptureApiTest extends \PHPUnit_Framework_TestCase
 {

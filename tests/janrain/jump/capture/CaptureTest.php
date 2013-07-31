@@ -73,13 +73,13 @@ class CaptureTest extends \PHPUnit_Framework_TestCase
         $captureConf = new CaptureConfig($config);
         $capture = new Capture($captureConf);
         $api = $capture->getApi();
-        $this->assertInstanceOf(\janrain\jump\CaptureApi::class, $api);
+        $this->assertInstanceOf(\janrain\jump\captureapi\CaptureApi::class, $api);
     }
 
     public function configGen()
     {
         $conf = [];
-        $reqKs = array_merge(\janrain\jump\CaptureAPIConfig::$REQUIRED_KEYS, CaptureConfig::$REQUIRED_KEYS);
+        $reqKs = array_merge(\janrain\jump\captureapi\CaptureAPIConfig::$REQUIRED_KEYS, CaptureConfig::$REQUIRED_KEYS);
         foreach ($reqKs as $k) {
             $conf[$k] = 'testvalue';
         }
