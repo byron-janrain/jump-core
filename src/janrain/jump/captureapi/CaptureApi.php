@@ -108,6 +108,6 @@ class CaptureApi extends AbstractFeature
 
     public function getPriority()
     {
-        return 0;
+        return 1;
     }
 }

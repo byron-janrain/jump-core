@@ -84,6 +84,6 @@ class Engage extends AbstractFeature
      */
     public function getPriority()
     {
-        return 2;
+        return 10;
     }
 }

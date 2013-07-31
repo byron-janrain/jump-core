@@ -140,7 +140,7 @@ class Capture extends AbstractFeature implements Renderable
      */
     public function getPriority()
     {
-        return 1;
+        return 5;
     }
 
     public function getApi()
