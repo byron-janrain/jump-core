@@ -69,7 +69,9 @@ final class Jump implements Renderable
     public function getCssHrefs() {
         $out = array();
         foreach ($this->features as $f) {
-            $out = array_merge($out, $f->getCssHrefs());
+            if ($f instanceof Renderable) {
+                $out = array_merge($out, $f->getCssHrefs());
+            }
         }
         return $out;
     }
@@ -80,7 +82,9 @@ final class Jump implements Renderable
     public function getCss() {
         $out = '';
         foreach ($this->features as $f) {
-            $out .= $f->getCss();
+            if ($f instanceof Renderable) {
+                $out .= $f->getCss();
+            }
         }
         return $out;
     }
