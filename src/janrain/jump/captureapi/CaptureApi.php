@@ -79,6 +79,13 @@ class CaptureApi extends AbstractFeature
         return $out;
     }
 
+    public function getUserSchema()
+    {
+        $resp = $this('entityType', array('type_name' => 'user'));
+        var_dump($resp);
+        return $resp;
+    }
+
     public static function generateUuid()
     {
         if (function_exists('openssl_random_pseudo_bytes')) {
