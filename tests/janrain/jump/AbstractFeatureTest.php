@@ -14,8 +14,14 @@ class AbstractFeatureTest extends \PHPUnit_Framework_TestCase
 
     public function testInit()
     {
-        $mockConf = $this->getMockForAbstractClass(AbstractConfig::class, array(), '', false);
-        $mock = $this->getMockForAbstractClass(AbstractFeature::class, array($mockConf));
+        $mockConf = $this->getMockBuilder(AbstractConfig::class)
+            ->setConstructorArgs([ [] ])
+            ->getMock();
+        $mockConf->expects($this->any())
+            ->method('offsetSet')
+            ->with($this->equalTo('key'), $this->equalTo('value'));
+        $mockStack = $this->getMock(FeatureStack::class);
+        $mock = $this->getMockForAbstractClass(AbstractFeature::class, array($mockConf, $mockStack));
         $this->assertInstanceOf(AbstractFeature::class, $mock);
         return $mock;
     }
@@ -35,5 +41,21 @@ class AbstractFeatureTest extends \PHPUnit_Framework_TestCase
     {
         $rc = new \ReflectionClass($mock);
         $this->assertEquals($rc->getShortName(), $mock->getName());
+    }
+
+    /**
+     * @depends testInit
+     */
+    public function testGetStack(AbstractFeature $mock)
+    {
+        $this->assertInstanceOf(FeatureStack::class, $mock->getStack());
+    }
+
+    /**
+     * @depends testInit
+     */
+    public function testSetConfig(AbstractFeature $mock)
+    {
+        $mock->setConfigItem('key', 'value');
     }
 }

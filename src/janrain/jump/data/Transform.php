@@ -26,7 +26,7 @@ class Transform {
         $decoded = json_decode($json);
         foreach ($decoded as &$xform) {
             try {
-                $rc = new \ReflectionClass("\\janrain\\jump\\data\\{$xform->op}");
+                $rc = new \ReflectionClass(__NAMESPACE__ . "\\ops\\{$xform->op}");
             } catch (\ReflectionException $e) {
                 throw new \InvalidArgumentException("Mapping operation {$xform->op} does not exist!", $e->getCode(), $e);
             }
@@ -41,5 +41,15 @@ class Transform {
         foreach ($this->xforms as $map) {
             $map($src, $tgt);
         }
+    }
+
+    public static function getAvailableOps()
+    {
+        $out = glob(__DIR__ . '/ops/*');
+        array_walk($out,
+            function (&$path) {
+                $path = basename($path, '.php');
+            });
+        return $out;
     }
 }

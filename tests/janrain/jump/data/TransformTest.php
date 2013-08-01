@@ -3,6 +3,7 @@ namespace janrain\jump\data;
 
 use janrain\jump\User as Jumper;
 use janrain\plex\User as Plexer;
+use janrain\jump\data\ops\AssignFromJump;
 
 abstract class TransformPlexer implements Plexer {
     public function offsetSet($name, $value)

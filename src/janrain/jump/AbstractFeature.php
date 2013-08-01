@@ -4,10 +4,12 @@ namespace janrain\jump;
 abstract class AbstractFeature
 {
     protected $config;
+    protected $stack;
 
-    public function __construct(AbstractConfig $c)
+    public function __construct(AbstractConfig $c, FeatureStack $fs)
     {
         $this->config = $c;
+        $this->stack = $fs;
     }
 
     public function isEnabled()
@@ -28,6 +30,11 @@ abstract class AbstractFeature
 
     public function setConfigItem($key, $value)
     {
-        return $this->config[$key] = $value;
+        return $this->config->offsetSet($key, $value);
+    }
+
+    public function getStack()
+    {
+        return $this->stack;
     }
 }

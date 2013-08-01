@@ -1,8 +1,9 @@
 <?php
-namespace janrain\jump\data;
+namespace janrain\jump\data\ops;
 
 use janrain\jump\User as Jumper;
 use janrain\plex\User as Plexer;
+use janrain\jump\data\TransformOp;
 
 class AssignFromJump extends TransformOp
 {

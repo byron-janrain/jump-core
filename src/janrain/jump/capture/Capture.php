@@ -58,9 +58,8 @@ class Capture extends AbstractFeature implements Renderable
     public function getEndHeadJs()
     {
         $out = '';
-        if ($captureSession = $this->config['capture.session']) {
-            $token = $captureSession->token;
-            $expires = gmdate('D, j M Y H:i:s', $captureSession->expires) . ' GMT';
+        if ($token = $this->config['capture.session->token']) {
+            $expires = gmdate('D, j M Y H:i:s', $this->config['capture.session->expires']) . ' GMT';
             $out .=
                 "window.localStorage.setItem('janrainCaptureToken', '{$token}');
                 window.localStorage.setItem('janrainCaptureToken_Expires', '{$expires}');\n";
@@ -101,9 +100,9 @@ class Capture extends AbstractFeature implements Renderable
     {
         $out = array('//d3t53pw1y3gpqf.cloudfront.net/styles/janrain.css');
         #todo decide how we're going to detect mobile
-        if (false) {
+        /*if (false) {
             $out[] = '//d3t53pw1y3gpqf.cloudfront.net/styles/janrain-mobile.css';
-        }
+        }*/
         return $out;
     }
 
