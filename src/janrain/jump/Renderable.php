@@ -1,5 +1,5 @@
 <?php
-namespace janrain\plex;
+namespace janrain\jump;
 
 /**
  * This interface represents the pre-render contract for all renderable Plex features.

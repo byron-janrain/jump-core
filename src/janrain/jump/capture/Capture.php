@@ -2,7 +2,7 @@
 namespace janrain\jump\capture;
 
 use janrain\jump\AbstractFeature;
-use janrain\plex\Renderable;
+use janrain\jump\Renderable;
 
 class Capture extends AbstractFeature implements Renderable
 {

@@ -2,7 +2,7 @@
 namespace janrain\jump\core;
 
 use janrain\jump\AbstractFeature;
-use janrain\plex\Renderable;
+use janrain\jump\Renderable;
 
 class Core extends AbstractFeature implements Renderable
 {

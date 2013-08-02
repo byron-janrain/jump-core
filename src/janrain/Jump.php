@@ -1,8 +1,7 @@
 <?php
 namespace janrain;
 
-use janrain\jump\Core;
-use janrain\plex\Renderable;
+use janrain\jump\Renderable;
 
 final class Jump implements Renderable
 {
