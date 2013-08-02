@@ -1,9 +1,9 @@
 <?php
 namespace janrain\jump\engage;
 
-use \PHPUnit_Framework_TestCase;
+use janrain\plex\GenericConfig;
 
-class EngageConfigTest extends PHPUnit_Framework_TestCase
+class EngageConfigTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @expectedException PHPUnit_Framework_Error
@@ -25,9 +25,10 @@ class EngageConfigTest extends PHPUnit_Framework_TestCase
     public function partialKeysGenerator()
     {
         $allKeys = EngageConfig::$REQUIRED_KEYS;
-        $out = array();
+        $out = [];
         foreach ($allKeys as $key) {
-            $out[] = array(array_diff(array($key), $allKeys));
+            $o = new GenericConfig(array_diff([$key], $allKeys));
+            $out[] = [$o];
         }
         return $out;
     }

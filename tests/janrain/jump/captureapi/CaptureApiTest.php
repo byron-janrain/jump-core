@@ -2,14 +2,15 @@
 namespace janrain\jump\captureapi;
 
 use janrain\jump\User;
+use janrain\plex\GenericConfig;
 
 class CaptureApiTest extends \PHPUnit_Framework_TestCase
 {
     protected $config;
 
     public function setUp() {
-        $fileConfig = new \ArrayObject(json_decode(file_get_contents('/Users/byron/captureinfo.json'), true));
-        $this->config = new CaptureApiConfig($fileConfig);
+        $fileConfig = json_decode(file_get_contents('/Users/byron/captureinfo.json'), true);
+        $this->config = new CaptureApiConfig(new GenericConfig($fileConfig));
     }
 
     public function testInit()

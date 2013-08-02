@@ -1,6 +1,8 @@
 <?php
 namespace janrain\jump;
 
+use janrain\plex\Config;
+
 /**
  * Configuration handler template class.
  *
@@ -12,16 +14,15 @@ namespace janrain\jump;
  *
  * @todo Create a generic subclass for testing this explicitly
  */
-abstract class AbstractConfig implements \ArrayAccess, \IteratorAggregate, \Countable
+abstract class AbstractConfig implements \ArrayAccess, \IteratorAggregate
 {
-    protected $arrayObj;
+    protected $plexConf;
 
     public static $REQUIRED_KEYS = array();
 
-    public function __construct($data)
+    public function __construct(Config $plexConf)
     {
-        $data = $this->flatten((object) $data);
-        $this->arrayObj = new \ArrayObject($data, \ArrayObject::ARRAY_AS_PROPS);
+        $this->plexConf = $plexConf;
         foreach (static::$REQUIRED_KEYS as $key) {
             if (!$this->offsetExists($key)) {
                 throw new \InvalidArgumentException("Required key \"$key\" not found when instantiating " . get_class($this));
@@ -29,13 +30,25 @@ abstract class AbstractConfig implements \ArrayAccess, \IteratorAggregate, \Coun
         }
     }
 
-    public function count() {return $this->arrayObj->count();}
+    public function getIterator()
+    {
+        return $this->plexConf->getIterator();
+    }
 
-    public function getIterator() {return $this->arrayObj->getIterator();}
+    public function offsetExists($offset)
+    {
+        return (bool) !is_null($this->plexConf->getItem($offset));
+    }
 
-    public function offsetExists($offset) {return $this->arrayObj->offsetExists($offset);}
-    public function offsetGet($offset) {return $this->arrayObj->offsetExists($offset) ? $this->arrayObj->offsetGet($offset) : null;}
-    public function offsetUnset($offset) {return $this->arrayObj->offsetUnset($offset);}
+    public function offsetGet($offset)
+    {
+        return $this->plexConf->getItem($offset) ?: null;
+    }
+
+    public function offsetUnset($offset)
+    {
+        $this->plexConf->setItem($offset, null);
+    }
 
     public function offsetSet($offset, $value)
     {
@@ -48,7 +61,7 @@ abstract class AbstractConfig implements \ArrayAccess, \IteratorAggregate, \Coun
             return $this->__set($offset, $value);
         } else {
             #nothing special happening here, so proceed as normal.
-            return $this->arrayObj->offsetSet($offset, $value);
+            $this->plexConf->setItem($offset, $value);
         }
     }
 
@@ -65,6 +78,7 @@ abstract class AbstractConfig implements \ArrayAccess, \IteratorAggregate, \Coun
         return implode('', $strings);
     }
 
+    /*
     protected function flatten($jsonDecoded, $path = '', &$out = array())
     {
         $type = gettype($jsonDecoded);
@@ -82,11 +96,12 @@ abstract class AbstractConfig implements \ArrayAccess, \IteratorAggregate, \Coun
         }
         return $out;
     }
+    */
 
     /**
     * @todo implement this as a reconstruction base on the values
     */
     public function __toString() {
-        return json_encode($this->arrayObj);
+        return $this->plexConf->toJson();
     }
 }

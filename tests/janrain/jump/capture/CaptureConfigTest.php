@@ -1,6 +1,8 @@
 <?php
 namespace janrain\jump\capture;
 
+use janrain\plex\GenericConfig;
+
 class CaptureConfigTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -25,7 +27,7 @@ class CaptureConfigTest extends \PHPUnit_Framework_TestCase
         $allKeys = CaptureConfig::$REQUIRED_KEYS;
         $out = [];
         foreach ($allKeys as $key) {
-            $out[] = [array_diff([$key], $allKeys)];
+            $out[] = [new GenericConfig(array_diff([$key], $allKeys))];
         }
         return $out;
     }

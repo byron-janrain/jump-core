@@ -2,6 +2,7 @@
 namespace janrain;
 
 use janrain\jump\Renderable;
+use janrain\plex\Config;
 
 final class Jump implements Renderable
 {
@@ -61,13 +62,13 @@ final class Jump implements Renderable
      * @param ArrayAccess
      *   An array accessible set of configuration data.  Likely janrain\plex\Config
      */
-    public function init(\ArrayAccess $data)
+    public function init(Config $data)
     {
         #validate $data
-        if (empty($data) || !isset($data['features'])) {
+        if (empty($data) || !$data->getItem('features')) {
             throw new \InvalidArgumentException();
         }
-        foreach ($data['features'] as $fName) {
+        foreach ($data->getItem('features') as $fName) {
             $fClass = '\\janrain\\jump\\' . strtolower($fName) . "\\$fName";
             $fConfig = jump\ConfigBuilder::build($fClass, $data);
             $feature = new $fClass($fConfig, $this->features);

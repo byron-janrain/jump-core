@@ -3,6 +3,7 @@ namespace janrain\jump\capture;
 
 use janrain\jump\captureapi\CaptureApi;
 use janrain\jump\captureapi\CaptureApiConfig;
+use janrain\plex\GenericConfig;
 
 class CaptureTest extends \PHPUnit_Framework_TestCase
 {
@@ -68,17 +69,6 @@ class CaptureTest extends \PHPUnit_Framework_TestCase
         $this->assertInternalType('string', $this->capture->getHtml());
     }
 
-    /**
-     * @dataProvider ConfigGen
-     */
-    public function testGetApi($config)
-    {
-        $captureConf = new CaptureConfig($config);
-        $capture = new Capture($captureConf);
-        $api = $capture->getApi();
-        $this->assertInstanceOf(CaptureApi::class, $api);
-    }
-
     public function configGen()
     {
         $conf = [];
@@ -90,8 +80,8 @@ class CaptureTest extends \PHPUnit_Framework_TestCase
         $conf2['capture.session'] = (object) ['token' => 'tokenvalue', 'expires' => time()];
         //var_dump($conf2);
         return [
-            [$conf],
-            [$conf2]
+            [new GenericConfig($conf)],
+            [new GenericConfig($conf2)]
         ];
     }
 }

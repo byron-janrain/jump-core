@@ -1,11 +1,13 @@
 <?php
 namespace janrain\jump;
 
+use janrain\plex\GenericConfig;
+
 class ConfigSetterImpl extends AbstractConfig
 {
     public function setKey1($value)
     {
-        $this->arrayObj->offsetSet('key1', 'setter' . $value);
+        $this->plexConf->setItem('key1', 'setter' . $value);
     }
 }
 
@@ -13,7 +15,7 @@ class ConfigMagicSetterImpl extends AbstractConfig
 {
     public function __set($key, $value)
     {
-        $this->arrayObj->offsetSet($key, 'magic' . $value);
+        $this->plexConf->setItem($key, 'magic' . $value);
     }
 }
 
@@ -21,12 +23,12 @@ class ConfigSetterAndMagic extends AbstractConfig
 {
     public function setKey1($value)
     {
-        $this->arrayObj->offsetSet('key1', 'setter' . $value);
+        $this->plexConf->setItem('key1', 'setter' . $value);
     }
 
     public function __set($key, $value)
     {
-        $this->arrayObj->offsetSet($key, 'magic' . $value);
+        $this->plexConf->setItem($key, 'magic' . $value);
     }
 }
 
@@ -35,7 +37,7 @@ class AbstractConfigTest extends \PHPUnit_Framework_TestCase
 
     public function testInit()
     {
-        $mock = $this->getMockForAbstractClass(AbstractConfig::class, [['key1' => 'value1']]);
+        $mock = $this->getMockForAbstractClass(AbstractConfig::class, [new GenericConfig(['key1' => 'value1'])]);
         $mock->expects($this->any())
             ->method('setKey1')
             ->will($this->returnValue(null));
@@ -100,21 +102,21 @@ class AbstractConfigTest extends \PHPUnit_Framework_TestCase
 
     public function testSetter()
     {
-        $conf = new ConfigSetterImpl([]);
+        $conf = new ConfigSetterImpl(new GenericConfig());
         $conf['key1'] = 'value2';
         $this->assertEquals('settervalue2', $conf['key1']);
     }
 
     public function testMagicSetter()
     {
-        $conf = new ConfigMagicSetterImpl([]);
+        $conf = new ConfigMagicSetterImpl(new GenericConfig());
         $conf['key3'] = 'value2';
         $this->assertEquals('magicvalue2', $conf['key3']);
     }
 
     public function testSetterBeforeMagic()
     {
-        $conf = new ConfigSetterAndMagic([]);
+        $conf = new ConfigSetterAndMagic(new GenericConfig());
         $conf['key1'] = 'value1';
         $this->assertEquals('settervalue1', $conf['key1']);
     }

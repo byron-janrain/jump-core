@@ -1,6 +1,8 @@
 <?php
 namespace janrain\jump;
 
+use janrain\plex\GenericConfig;
+
 class AbstractFeatureTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -15,7 +17,7 @@ class AbstractFeatureTest extends \PHPUnit_Framework_TestCase
     public function testInit()
     {
         $mockConf = $this->getMockBuilder(AbstractConfig::class)
-            ->setConstructorArgs([ [] ])
+            ->setConstructorArgs([new GenericConfig()])
             ->getMock();
         $mockConf->expects($this->any())
             ->method('offsetSet')

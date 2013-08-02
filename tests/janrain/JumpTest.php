@@ -1,6 +1,8 @@
 <?php
 namespace janrain;
 
+use janrain\plex\GenericConfig;
+
 class JumpTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -39,7 +41,7 @@ class JumpTest extends \PHPUnit_Framework_TestCase
     public function testInitNoFeatures()
     {
         $jump = Jump::getInstance();
-        $noFeatures = new \ArrayObject();
+        $noFeatures = new GenericConfig([]);
         $jump->init($noFeatures);
     }
 
@@ -49,7 +51,7 @@ class JumpTest extends \PHPUnit_Framework_TestCase
     public function testInitInvalidFeature()
     {
         $jump = Jump::getInstance();
-        $badFeatures = new \ArrayObject(['features' => ['INVALIDFEATURE']]);
+        $badFeatures = new GenericConfig(['features' => ['INVALIDFEATURE']]);
         $jump->init($noFeatures);
     }
 
@@ -68,8 +70,8 @@ class JumpTest extends \PHPUnit_Framework_TestCase
     public function initGen()
     {
         return [
-            [new \ArrayObject(['features' => ['Core'], 'jumpUrl' => 'string'])],
-            [new \ArrayObject(
+            [new GenericConfig(['features' => ['Core'], 'jumpUrl' => 'string'])],
+            [new GenericConfig(
                 ['features' => ['Core', 'Capture'], 'jumpUrl' => 'string', 'capture.appId' => '', 'capture.clientId' => '', 'capture.captureServer' => '']
                 )],
         ];

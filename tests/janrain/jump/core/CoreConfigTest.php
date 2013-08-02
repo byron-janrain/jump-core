@@ -1,6 +1,8 @@
 <?php
 namespace janrain\jump\core;
 
+use janrain\plex\GenericConfig;
+
 class CoreConfigTest extends \PHPUnit_Framework_TestCase
 {
 	/**
@@ -26,7 +28,7 @@ class CoreConfigTest extends \PHPUnit_Framework_TestCase
 		$allKeys = CoreConfig::$REQUIRED_KEYS;
 		$out = array();
 		foreach ($allKeys as $key) {
-			$out[] = [array_diff([$key], $allKeys)];
+			$out[] = [new GenericConfig(array_diff([$key], $allKeys))];
 		}
 		return $out;
 	}

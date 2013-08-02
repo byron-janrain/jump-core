@@ -1,18 +1,20 @@
 <?php
 namespace janrain\jump;
 
+use janrain\plex\Config;
+
 class ConfigBuilder
 {
-    public static function build($featureClassName, \ArrayAccess $data)
+    public static function build($featureClassName, Config $plexConf)
     {
+        static $generators = array();
         $configName = $featureClassName . 'Config';
         if (!is_subclass_of($configName, 'janrain\jump\AbstractConfig')) {
             throw new \InvalidArgumentException("{$featureClassName} doesn't extend AbstractConfig");
         }
-        static $generators = array();
         if (empty($generators[$featureClassName])) {
             $generators[$featureClassName] = new \ReflectionClass($configName);
         }
-        return $generators[$featureClassName]->newInstance($data);
+        return $generators[$featureClassName]->newInstance($plexConf);
     }
 }
