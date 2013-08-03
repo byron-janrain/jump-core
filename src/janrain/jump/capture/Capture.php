@@ -58,8 +58,9 @@ class Capture extends AbstractFeature implements Renderable
     public function getEndHeadJs()
     {
         $out = '';
-        if ($token = $this->config['capture.session->token']) {
-            $expires = gmdate('D, j M Y H:i:s', $this->config['capture.session->expires']) . ' GMT';
+        if ($captureSession = $this->config['capture.session']) {
+            $token = $captureSession->token;
+            $expires = gmdate('D, j M Y H:i:s', $captureSession->expires) . ' GMT';
             $out .=
                 "window.localStorage.setItem('janrainCaptureToken', '{$token}');
                 window.localStorage.setItem('janrainCaptureToken_Expires', '{$expires}');\n";
