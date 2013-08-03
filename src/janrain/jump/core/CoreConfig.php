@@ -11,7 +11,7 @@ class CoreConfig extends AbstractConfig
     public function __construct(Config $data)
     {
         parent::__construct($data);
-        if (empty($data->getItem('features'))) {
+        if ($data->getItem('features')) {
             $data->setItem('features', array('Core'));
         }
     }
