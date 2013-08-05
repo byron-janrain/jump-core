@@ -35,6 +35,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     public function testGetAttributePaths($data, $paths)
     {
         $jumper = User::__set_state($data);
+        var_dump($jumper);
         $this->assertEquals($paths, $jumper->getAttributePaths());
     }
 

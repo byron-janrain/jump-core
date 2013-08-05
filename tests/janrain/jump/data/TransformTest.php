@@ -6,11 +6,11 @@ use janrain\plex\User as Plexer;
 use janrain\jump\data\ops\AssignFromJump;
 
 abstract class TransformPlexer implements Plexer {
-    public function offsetSet($name, $value)
+    public function setAttribute($name, $value)
     {
         $this->name = $value;
     }
-    public function offsetGet($name)
+    public function getAttribute($name)
     {
         return isset($this->name) ? $this->name : null;
     }
@@ -45,9 +45,9 @@ class TransformTest extends \PHPUnit_Framework_TestCase
      */
     public function testMapping($xform)
     {
-        $this->assertNotEquals($this->jumper->getAttribute('/uuid'), $this->plexer->offsetGet('jump_id'));
+        $this->assertNotEquals($this->jumper->getAttribute('/uuid'), $this->plexer->getAttribute('jump_id'));
         $xform->map($this->jumper, $this->plexer);
-        $this->assertEquals($this->jumper->getAttribute('/uuid'), $this->plexer->offsetGet('jump_id'));
+        $this->assertEquals($this->jumper->getAttribute('/uuid'), $this->plexer->getAttribute('jump_id'));
     }
 
     public function testBuildMappingFromJson()
