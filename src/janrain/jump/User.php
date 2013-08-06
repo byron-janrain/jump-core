@@ -8,6 +8,7 @@ class User implements Transformable
 
     protected $data;
     protected $dataKeys;
+    protected $profile;
 
     public function getAttribute($path)
     {
@@ -58,5 +59,10 @@ class User implements Transformable
         $instance->data = $data;
         $instance->mapAttributes($instance->data);
         return $instance;
+    }
+
+    public function getProfileData()
+    {
+        return $this->data;
     }
 }
