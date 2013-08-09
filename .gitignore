@@ -1,6 +1,7 @@
 composer.lock
 composer.phar
 /vendor/
+!/vendor/autoload.php
 autoload.php
 /coverage/
 /docs/
