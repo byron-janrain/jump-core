@@ -44,8 +44,7 @@ interface User extends Transformable
     /**
      * Retreive session data by key.
      *
-     * @param string
-     *   *required* The key name of the session data item.
+     * @param string *required* The key name of the session data item.
      *
      * @param mixed
      *   _optional_ A default value to return if the key data is empty.
