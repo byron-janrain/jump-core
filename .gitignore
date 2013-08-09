@@ -1,6 +1,5 @@
 composer.lock
 composer.phar
-!vendor/autoload.php
 vendor/*
 coverage/*
 docs/*
