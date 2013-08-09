@@ -24,8 +24,8 @@ class TransformTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->jumper = Jumper::__set_state(['uuid' => `uuidgen`]);
-        $this->plexer = $this->getMockForAbstractClass(TransformPlexer::class);
+        $this->jumper = Jumper::__set_state(array('uuid' => `uuidgen`));
+        $this->plexer = $this->getMockForAbstractClass(__NAMESPACE__ . '\\TransformPlexer');
     }
 
     public function testBuildMapping()
@@ -33,9 +33,9 @@ class TransformTest extends \PHPUnit_Framework_TestCase
         $xform = new Transform();
         $xform->addOp(new AssignFromJump('/uuid', 'jump_id'));
         $ops = $xform->getOps();
-        $this->assertInstanceOf(\ArrayIterator::class, $ops);
+        $this->assertInstanceOf('ArrayIterator', $ops);
         foreach ($ops as $op) {
-            $this->assertInstanceOf(TransformOp::class, $op);
+            $this->assertInstanceOf(__NAMESPACE__ . '\\TransformOp', $op);
         }
         return $xform;
     }

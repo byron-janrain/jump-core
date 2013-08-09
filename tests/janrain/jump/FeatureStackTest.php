@@ -8,7 +8,7 @@ class FeatureStackTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->mockFeatureName = 'MockFeature';
-        $this->mockFeature = $this->getMockBuilder(AbstractFeature::class)
+        $this->mockFeature = $this->getMockBuilder(__NAMESPACE__ . '\\AbstractFeature')
             ->disableOriginalConstructor()
             ->getMock();
         $this->mockFeature->expects($this->any())
@@ -45,7 +45,7 @@ class FeatureStackTest extends \PHPUnit_Framework_TestCase
     public function testFeaturesGetPrioritized()
     {
         $stack = new FeatureStack();
-        $secondFeature = $this->getMockBuilder(AbstractFeature::class)
+        $secondFeature = $this->getMockBuilder(__NAMESPACE__ . '\\AbstractFeature')
             ->disableOriginalConstructor()
             ->getMock();
         $secondFeature->expects($this->any())
@@ -72,10 +72,10 @@ class FeatureStackTest extends \PHPUnit_Framework_TestCase
 
     public function badNameProvider()
     {
-        return [
-            ['NO SUCH FEATURE'],
-            [''],
-            [null]
-        ];
+        return array(
+            array('NO SUCH FEATURE'),
+            array(''),
+            array(null)
+        );
     }
 }

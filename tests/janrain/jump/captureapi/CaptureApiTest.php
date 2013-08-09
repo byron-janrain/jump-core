@@ -1,7 +1,6 @@
 <?php
 namespace janrain\jump\captureapi;
 
-use janrain\jump\User;
 use janrain\plex\GenericConfig;
 
 class CaptureApiTest extends \PHPUnit_Framework_TestCase
@@ -16,7 +15,7 @@ class CaptureApiTest extends \PHPUnit_Framework_TestCase
     public function testInit()
     {
         $api = new CaptureApi($this->config);
-        $this->assertInstanceof(CaptureApi::class, $api);
+        $this->assertInstanceof(__NAMESPACE__ . '\\CaptureApi', $api);
     }
 
     /**
@@ -25,7 +24,7 @@ class CaptureApiTest extends \PHPUnit_Framework_TestCase
     public function testApi()
     {
         $api = new CaptureApi($this->config);
-        $answer = $api('entity.count', ['type_name' => 'user']);
+        $answer = $api('entity.count', array('type_name' => 'user'));
         $this->assertEquals('ok', $answer['stat']);
     }
 
@@ -33,7 +32,7 @@ class CaptureApiTest extends \PHPUnit_Framework_TestCase
     {
         $api = new CaptureApi($this->config);
         $answer = $api->fetchUserByUuid('e2c9174b-0904-4757-a15a-f3d8d149983a');
-        $this->assertInstanceof(User::class, $answer);
+        $this->assertInstanceof('janrain\jump\User', $answer);
     }
 
     public function testGenerateUuid()
@@ -57,7 +56,7 @@ class CaptureApiTest extends \PHPUnit_Framework_TestCase
     public function testUseToken($token)
     {
         $api = new CaptureApi($this->config);
-        $api('entity', ['type_name' => 'user', 'uuid' => 'e2c9174b-0904-4757-a15a-f3d8d149983a'], $token);
+        $api('entity', array('type_name' => 'user', 'uuid' => 'e2c9174b-0904-4757-a15a-f3d8d149983a'), $token);
     }
 
     /**
@@ -66,7 +65,7 @@ class CaptureApiTest extends \PHPUnit_Framework_TestCase
     public function testBadCall()
     {
         $api = new CaptureApi($this->config);
-        $api('entity', ['type_name' => 'user'], 'badtoken');
+        $api('entity', array('type_name' => 'user'), 'badtoken');
     }
 
     public function testGetPriority()

@@ -3,48 +3,48 @@ namespace janrain\jump\core;
 
 class CoreTest extends \PHPUnit_Framework_TestCase
 {
-	protected $config;
-	protected $core;
+    protected $config;
+    protected $core;
 
-	public function setUp() {
-		$this->config = $this->getMockBuilder(CoreConfig::class)
-			->disableOriginalConstructor()
-			->getMock();
-		$this->core = new Core($this->config);
-	}
+    public function setUp() {
+        $this->config = $this->getMockBuilder(__NAMESPACE__ . '\\CoreConfig')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $this->core = new Core($this->config);
+    }
 
-	/**
-	 * @expectedException PHPUnit_Framework_Error
-	 */
-	public function testInitNoConfig() {
-		$core = new Core();
-	}
+    /**
+     * @expectedException PHPUnit_Framework_Error
+     */
+    public function testInitNoConfig() {
+        $core = new Core();
+    }
 
-	public function testGetHeadJsSrcsReturnsArray() {
-		$this->assertInternalType('array', $this->core->getHeadJsSrcs());
-	}
+    public function testGetHeadJsSrcsReturnsArray() {
+        $this->assertInternalType('array', $this->core->getHeadJsSrcs());
+    }
 
-	public function testGetStartHeadJsReturnsString() {
-		$this->assertInternalType('string', $this->core->getStartHeadJs());
-	}
+    public function testGetStartHeadJsReturnsString() {
+        $this->assertInternalType('string', $this->core->getStartHeadJs());
+    }
 
-	public function testGetSettingsHeadJsReturnsString() {
-		$this->assertInternalType('string', $this->core->getSettingsHeadJs());
-	}
+    public function testGetSettingsHeadJsReturnsString() {
+        $this->assertInternalType('string', $this->core->getSettingsHeadJs());
+    }
 
-	public function testGetEndHeadJsReturnsString() {
-		$this->assertInternalType('string', $this->core->getEndHeadJs());
-	}
+    public function testGetEndHeadJsReturnsString() {
+        $this->assertInternalType('string', $this->core->getEndHeadJs());
+    }
 
-	public function testGetCssHrefsReturnsArray() {
-		$this->assertInternalType('array', $this->core->getCssHrefs());
-	}
+    public function testGetCssHrefsReturnsArray() {
+        $this->assertInternalType('array', $this->core->getCssHrefs());
+    }
 
-	public function testGetCssReturnsString() {
-		$this->assertInternalType('string', $this->core->getCss());
-	}
+    public function testGetCssReturnsString() {
+        $this->assertInternalType('string', $this->core->getCss());
+    }
 
-	public function testGetHtmlReturnsString() {
-		$this->assertInternalType('string', $this->core->getHtml());
-	}
+    public function testGetHtmlReturnsString() {
+        $this->assertInternalType('string', $this->core->getHtml());
+    }
 }

@@ -10,7 +10,7 @@ class EngageTest extends \PHPUnit_Framework_TestCase
 
     public function setUp() {
 
-        $this->config = $this->getMockBuilder(EngageConfig::class)
+        $this->config = $this->getMockBuilder(__NAMESPACE__ . '\\EngageConfig')
             ->disableOriginalConstructor()
             ->getMock();
         $this->engage = new Engage($this->config);
@@ -62,14 +62,14 @@ class EngageTest extends \PHPUnit_Framework_TestCase
 
     public function settingsGen()
     {
-        $out = [];
+        $out = array();
         $requiredEngageOpts = array_combine(EngageConfig::$REQUIRED_KEYS, EngageConfig::$REQUIRED_KEYS);
         $configWithCapture = new GenericConfig($requiredEngageOpts);
-        $configWithCapture->setItem('features', ['Engage', 'Capture']);
-        $out[] = [$configWithCapture];
+        $configWithCapture->setItem('features', array('Engage', 'Capture'));
+        $out[] = array($configWithCapture);
         $configNoCapture = new GenericConfig($requiredEngageOpts);
-        $configNoCapture->setItem('features', ['Engage']);
-        $out[] = [$configNoCapture];
+        $configNoCapture->setItem('features', array('Engage'));
+        $out[] = array($configNoCapture);
         return $out;
     }
 }

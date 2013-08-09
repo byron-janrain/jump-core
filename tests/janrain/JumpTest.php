@@ -29,7 +29,7 @@ class JumpTest extends \PHPUnit_Framework_TestCase
     public function testGetInstance()
     {
         $jump = Jump::getInstance();
-        $this->assertInstanceOf(Jump::class, $jump);
+        $this->assertInstanceOf(__NAMESPACE__ . '\\'. 'Jump', $jump);
     }
 
     /**
@@ -47,7 +47,7 @@ class JumpTest extends \PHPUnit_Framework_TestCase
     public function testInitNoFeatures()
     {
         $jump = Jump::getInstance();
-        $noFeatures = new GenericConfig([]);
+        $noFeatures = new GenericConfig(array());
         $jump->init($noFeatures);
     }
 
@@ -57,7 +57,7 @@ class JumpTest extends \PHPUnit_Framework_TestCase
     public function testInitInvalidFeature()
     {
         $jump = Jump::getInstance();
-        $badFeatures = new GenericConfig(['features' => ['INVALIDFEATURE']]);
+        $badFeatures = new GenericConfig(array('features' => array('INVALIDFEATURE')));
         $jump->init($noFeatures);
     }
 
@@ -69,22 +69,22 @@ class JumpTest extends \PHPUnit_Framework_TestCase
         $jump = Jump::getInstance();
         $jump->init($data);
         $features = $jump->getFeatures();
-        $this->assertInstanceOf(jump\FeatureStack::class, $features);
+        $this->assertInstanceOf(__NAMESPACE__ . '\\jump\\FeatureStack', $features);
     }
 
 
     public function initGen()
     {
-        return [
-            [new GenericConfig(['features' => ['Core'], 'jumpUrl' => 'string'])],
-            [new GenericConfig(
-                ['features' => ['Core', 'Capture'],
+        return array(
+            array(new GenericConfig(array('features' => array('Core'), 'jumpUrl' => 'string'))),
+            array(new GenericConfig(
+                array('features' => array('Core', 'Capture'),
                 'jumpUrl' => 'string',
                 'capture.appId' => '',
                 'capture.clientId' => '',
-                'capture.captureServer' => '']
-                )],
-        ];
+                'capture.captureServer' => '')
+                )),
+        );
     }
 
     /**

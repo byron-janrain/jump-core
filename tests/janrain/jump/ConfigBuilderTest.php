@@ -1,15 +1,15 @@
 <?php
 namespace janrain\jump;
 
-use janrain\jump\core\Core;
 use janrain\plex\GenericConfig;
 
 class ConfigBuilderTest extends \PHPUnit_Framework_TestCase
 {
     public function testBuild()
     {
-        $config = ConfigBuilder::build(Core::class, new GenericConfig(['features' => [], 'jumpUrl' => '']));
-        $this->assertInstanceOf(AbstractConfig::class, $config);
+        $config = ConfigBuilder::build(
+            __NAMESPACE__ . '\\core\\Core', new GenericConfig(array('features' => array(), 'jumpUrl' => '')));
+        $this->assertInstanceOf(__NAMESPACE__ . '\\AbstractConfig', $config);
     }
 
     /**

@@ -7,7 +7,9 @@ class TransformOpTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->mock = $this->getMockForAbstractClass(TransformOp::class, ['jumpField', 'plexField']);
+        $this->mock = $this->getMockForAbstractClass(
+            __NAMESPACE__ . '\\TransformOp',
+            array('jumpField', 'plexField'));
     }
 
     public function testToString()

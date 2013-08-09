@@ -17,7 +17,7 @@ class EngageConfigTest extends \PHPUnit_Framework_TestCase
     {
         $conf = new GenericConfig(array_combine(EngageConfig::$REQUIRED_KEYS, EngageConfig::$REQUIRED_KEYS));
         $e = new EngageConfig($conf);
-        $this->assertInstanceOf(EngageConfig::class, $e);
+        $this->assertInstanceOf(__NAMESPACE__ . '\\EngageConfig', $e);
     }
 
     /**
@@ -32,10 +32,10 @@ class EngageConfigTest extends \PHPUnit_Framework_TestCase
     public function partialKeysGenerator()
     {
         $allKeys = EngageConfig::$REQUIRED_KEYS;
-        $out = [];
+        $out = array();
         foreach ($allKeys as $key) {
-            $o = new GenericConfig(array_diff([$key], $allKeys));
-            $out[] = [$o];
+            $o = new GenericConfig(array_diff(array($key), $allKeys));
+            $out[] = array($o);
         }
         return $out;
     }

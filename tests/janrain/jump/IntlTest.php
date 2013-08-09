@@ -7,7 +7,7 @@ class IntlTest extends \PHPUnit_Framework_TestCase
     public function testFactoryInit()
     {
         $xlate = Intl::createForLang();
-        $this->assertInstanceOf(Intl::class, $xlate);
+        $this->assertInstanceOf(__NAMESPACE__ . '\\' . 'Intl', $xlate);
     }
 
     public function testInitDefaultsToEnUs()
@@ -35,7 +35,7 @@ class IntlTest extends \PHPUnit_Framework_TestCase
     public function testTranslateNonString()
     {
         $xlate = Intl::createForLang();
-        $translated = $xlate([]);
+        $translated = $xlate(array());
     }
 
     public function testTranslatePreprocessor()

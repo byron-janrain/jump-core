@@ -25,9 +25,9 @@ class CaptureConfigTest extends \PHPUnit_Framework_TestCase
     public function partialKeysGenerator()
     {
         $allKeys = CaptureConfig::$REQUIRED_KEYS;
-        $out = [];
+        $out = array();
         foreach ($allKeys as $key) {
-            $out[] = [new GenericConfig(array_diff([$key], $allKeys))];
+            $out[] = array(new GenericConfig(array_diff(array($key), $allKeys)));
         }
         return $out;
     }

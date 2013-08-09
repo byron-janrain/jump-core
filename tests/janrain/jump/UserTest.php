@@ -17,7 +17,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetStateNoUuid()
     {
-        $jumper = User::__set_state([]);
+        $jumper = User::__set_state(array());
     }
 
     /**
@@ -26,7 +26,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     public function testSetState($data)
     {
         $jumper = User::__set_state($data);
-        $this->assertInstanceOf(User::class, $jumper);
+        $this->assertInstanceOf(__NAMESPACE__ . '\\User', $jumper);
     }
 
     /**
@@ -85,8 +85,10 @@ class UserTest extends \PHPUnit_Framework_TestCase
     {
         $testJson = '{"name":{"first":"Tester","last":"Testerton"},"uuid":12345,"somes":["stuff1","stuff2","stuff3"]}';
         $obj = json_decode($testJson, true);
-        return [
-            [$obj, ['/name','/name/first', '/name/last', '/uuid','/somes','/somes#1','/somes#2', '/somes#3']],
-            ];
+        return array(
+                array(
+                    $obj,
+                    array('/name','/name/first', '/name/last', '/uuid','/somes','/somes#1','/somes#2', '/somes#3')),
+            );
     }
 }

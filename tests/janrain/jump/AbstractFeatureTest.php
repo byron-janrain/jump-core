@@ -5,26 +5,24 @@ use janrain\plex\GenericConfig;
 
 class AbstractFeatureTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * @expectedException PHPUnit_Framework_Error
      */
     public function testInitNoConfig()
     {
-        $mock = $this->getMockForAbstractClass(AbstractFeature::class);
+        $mock = $this->getMockForAbstractClass(__NAMESPACE__ . '\\AbstractFeature');
     }
 
     public function testInit()
     {
-        $mockConf = $this->getMockBuilder(AbstractConfig::class)
-            ->setConstructorArgs([new GenericConfig()])
-            ->getMock();
+        $mockConf = $this->getMockBuilder(__NAMESPACE__ . '\\core\\CoreConfig')
+            ->disableOriginalConstructor()->getMock();
         $mockConf->expects($this->any())
             ->method('offsetSet')
             ->with($this->equalTo('key'), $this->equalTo('value'));
-        $mockStack = $this->getMock(FeatureStack::class);
-        $mock = $this->getMockForAbstractClass(AbstractFeature::class, array($mockConf, $mockStack));
-        $this->assertInstanceOf(AbstractFeature::class, $mock);
+        $mockStack = $this->getMock(__NAMESPACE__ . '\\FeatureStack');
+        $mock = $this->getMockForAbstractClass(__NAMESPACE__ . '\\AbstractFeature', array($mockConf, $mockStack));
+        $this->assertInstanceOf(__NAMESPACE__ . '\\AbstractFeature', $mock);
         return $mock;
     }
 
@@ -50,7 +48,7 @@ class AbstractFeatureTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetStack(AbstractFeature $mock)
     {
-        $this->assertInstanceOf(FeatureStack::class, $mock->getStack());
+        $this->assertInstanceOf(__NAMESPACE__ . '\\FeatureStack', $mock->getStack());
     }
 
     /**

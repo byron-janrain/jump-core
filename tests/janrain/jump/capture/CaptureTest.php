@@ -12,7 +12,7 @@ class CaptureTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->config = $this->getMockBuilder(CaptureConfig::class)
+        $this->config = $this->getMockBuilder(__NAMESPACE__ . '\\CaptureConfig')
             ->disableOriginalConstructor()
             ->getMock();
         $this->capture = new Capture($this->config);
@@ -71,17 +71,17 @@ class CaptureTest extends \PHPUnit_Framework_TestCase
 
     public function configGen()
     {
-        $conf = [];
+        $conf = array();
         $reqKs = array_merge(CaptureAPIConfig::$REQUIRED_KEYS, CaptureConfig::$REQUIRED_KEYS);
         foreach ($reqKs as $k) {
             $conf[$k] = 'testvalue';
         }
         $conf2 = $conf;
-        $conf2['capture.session'] = (object) ['token' => 'tokenvalue', 'expires' => time()];
+        $conf2['capture.session'] = (object) array('token' => 'tokenvalue', 'expires' => time());
         //var_dump($conf2);
-        return [
-            [new GenericConfig($conf)],
-            [new GenericConfig($conf2)]
-        ];
+        return array(
+            array(new GenericConfig($conf)),
+            array(new GenericConfig($conf2))
+        );
     }
 }

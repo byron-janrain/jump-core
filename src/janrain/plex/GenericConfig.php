@@ -21,7 +21,7 @@ class GenericConfig implements Config {
         if ($data) {
             $this->a = $data;
         } else {
-            $this->a = [];
+            $this->a = array();
         }
     }
 

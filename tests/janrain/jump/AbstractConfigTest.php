@@ -37,7 +37,9 @@ class AbstractConfigTest extends \PHPUnit_Framework_TestCase
 
     public function testInit()
     {
-        $mock = $this->getMockForAbstractClass(AbstractConfig::class, [new GenericConfig(['key1' => 'value1'])]);
+        $mock = $this->getMockForAbstractClass(
+            __NAMESPACE__ . '\\' . 'AbstractConfig',
+            array(new GenericConfig(array('key1' => 'value1'))));
         $mock->expects($this->any())
             ->method('setKey1')
             ->will($this->returnValue(null));
@@ -75,11 +77,6 @@ class AbstractConfigTest extends \PHPUnit_Framework_TestCase
     public function testOffsetGet($mock)
     {
         $this->assertEquals('value1', $mock['key1']);
-    }
-
-    public function mockProvider()
-    {
-        return [[$this->getMockForAbstractClass(AbstractConfig::class, [['key1'=>'value1']])]];
     }
 
     /**
