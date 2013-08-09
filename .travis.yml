@@ -5,4 +5,3 @@ php:
   - 5.5
 env:
   - MAGENTODEV=1
-script: phpunit --coverage-text
