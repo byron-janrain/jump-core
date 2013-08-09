@@ -20,6 +20,12 @@ class JumpTest extends \PHPUnit_Framework_TestCase
             //->method()->will();
     }
 
+    public function testGetFeature()
+    {
+        $jump = Jump::getInstance();
+        $this->assertEquals(null, $jump->getFeature('Capture'));
+    }
+
     public function testGetInstance()
     {
         $jump = Jump::getInstance();
@@ -72,7 +78,11 @@ class JumpTest extends \PHPUnit_Framework_TestCase
         return [
             [new GenericConfig(['features' => ['Core'], 'jumpUrl' => 'string'])],
             [new GenericConfig(
-                ['features' => ['Core', 'Capture'], 'jumpUrl' => 'string', 'capture.appId' => '', 'capture.clientId' => '', 'capture.captureServer' => '']
+                ['features' => ['Core', 'Capture'],
+                'jumpUrl' => 'string',
+                'capture.appId' => '',
+                'capture.clientId' => '',
+                'capture.captureServer' => '']
                 )],
         ];
     }

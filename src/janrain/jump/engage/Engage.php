@@ -34,7 +34,7 @@ class Engage extends AbstractFeature
      */
     public function getSettingsHeadJs()
     {
-        if (\janrain\Jump::getInstance(array())->getFeature('Capture')) {
+        if (in_array('Capture', $this->config['features'])) {
             return '';
         }
         $opts = array(

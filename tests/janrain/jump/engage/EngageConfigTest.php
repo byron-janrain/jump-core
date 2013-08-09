@@ -13,6 +13,13 @@ class EngageConfigTest extends \PHPUnit_Framework_TestCase
         new EngageConfig();
     }
 
+    public function testInit()
+    {
+        $conf = new GenericConfig(array_combine(EngageConfig::$REQUIRED_KEYS, EngageConfig::$REQUIRED_KEYS));
+        $e = new EngageConfig($conf);
+        $this->assertInstanceOf(EngageConfig::class, $e);
+    }
+
     /**
      * @dataProvider partialKeysGenerator
      * @expectedException InvalidArgumentException

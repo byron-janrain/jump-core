@@ -1,6 +1,8 @@
 <?php
 namespace janrain\jump\engage;
 
+use janrain\plex\GenericConfig;
+
 class EngageTest extends \PHPUnit_Framework_TestCase
 {
     protected $config;
@@ -29,8 +31,12 @@ class EngageTest extends \PHPUnit_Framework_TestCase
         $this->assertInternalType('string', $this->engage->getStartHeadJs());
     }
 
-    public function testGetSettingsHeadJsReturnsString() {
-        $this->assertInternalType('string', $this->engage->getSettingsHeadJs());
+    /**
+     * @dataProvider settingsGen
+     */
+    public function testGetSettingsHeadJsReturnsString($conf) {
+        $engage = new Engage(new EngageConfig($conf));
+        $this->assertInternalType('string', $engage->getSettingsHeadJs());
     }
 
     public function testGetEndHeadJsReturnsString() {
@@ -47,5 +53,23 @@ class EngageTest extends \PHPUnit_Framework_TestCase
 
     public function testGetHtmlReturnsString() {
         $this->assertInternalType('string', $this->engage->getHtml());
+    }
+
+    public function testGetPriority()
+    {
+        return $this->assertEquals('10', $this->engage->getPriority());
+    }
+
+    public function settingsGen()
+    {
+        $out = [];
+        $requiredEngageOpts = array_combine(EngageConfig::$REQUIRED_KEYS, EngageConfig::$REQUIRED_KEYS);
+        $configWithCapture = new GenericConfig($requiredEngageOpts);
+        $configWithCapture->setItem('features', ['Engage', 'Capture']);
+        $out[] = [$configWithCapture];
+        $configNoCapture = new GenericConfig($requiredEngageOpts);
+        $configNoCapture->setItem('features', ['Engage']);
+        $out[] = [$configNoCapture];
+        return $out;
     }
 }

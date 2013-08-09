@@ -65,4 +65,9 @@ class TransformTest extends \PHPUnit_Framework_TestCase
         $json = '[{"op":"AssignFromJumper","j":"jf","p":"pf"},{"op":"AssignFromJump","j":"jf2","p":"pf2"}]';
         $xform = Transform::loadFromJson($json);
     }
+
+    public function testGetAvailableOps()
+    {
+        $this->assertContains('AssignFromJump', Transform::getAvailableOps());
+    }
 }

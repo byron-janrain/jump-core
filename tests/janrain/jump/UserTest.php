@@ -35,7 +35,6 @@ class UserTest extends \PHPUnit_Framework_TestCase
     public function testGetAttributePaths($data, $paths)
     {
         $jumper = User::__set_state($data);
-        var_dump($jumper);
         $this->assertEquals($paths, $jumper->getAttributePaths());
     }
 
@@ -61,6 +60,15 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('Tester', $firstname);
         $this->assertEquals(null, $jumper->getAttribute('/thereisnospoon'));
         $this->assertEquals(null, $jumper->getAttribute('thereisnospoon'));
+    }
+
+    /**
+     * @dataProvider getData
+     */
+    public function testGetProfileData($data)
+    {
+        $jumper = User::__set_state($data);
+        $this->assertInternalType('array', $jumper->getProfileData());
     }
 
     /**
