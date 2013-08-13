@@ -119,4 +119,9 @@ class CaptureApi extends AbstractFeature
     {
         return 1;
     }
+
+    public function isEnabled()
+    {
+        return true;
+    }
 }

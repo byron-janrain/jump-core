@@ -102,4 +102,9 @@ class Core extends AbstractFeature implements Renderable
     {
         return 0;
     }
+
+    public function isEnabled()
+    {
+        return true;
+    }
 }

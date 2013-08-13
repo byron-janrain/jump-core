@@ -1,6 +1,11 @@
 <?php
 namespace janrain\jump;
 
+/**
+ * The default implementation for most Features.
+ *
+ * All JUMP features will need to
+ */
 abstract class AbstractFeature
 {
     protected $config;
@@ -14,7 +19,8 @@ abstract class AbstractFeature
 
     public function isEnabled()
     {
-        return (bool) $this->config->offsetGet("{$this->getName()}Enabled");
+        $name = strtolower($this->getName()) . '.enabled';
+        return (bool) $this->config->offsetGet($name);
     }
 
     public function getName()

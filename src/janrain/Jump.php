@@ -85,7 +85,7 @@ final class Jump implements Renderable
     {
         $out = array();
         foreach ($this->features as $f) {
-            if ($f instanceof Renderable) {
+            if ($f instanceof Renderable && $f->isEnabled()) {
                 $out = array_merge($out, $f->getHeadJsSrcs());
             }
         }
@@ -98,7 +98,7 @@ final class Jump implements Renderable
     public function getStartHeadJs() {
         $out = '';
         foreach ($this->features as $f) {
-            if ($f instanceof Renderable) {
+            if ($f instanceof Renderable && $f->isEnabled()) {
                 $out .= $f->getStartheadJs();
             }
         }
@@ -111,7 +111,7 @@ final class Jump implements Renderable
     public function getSettingsHeadJs() {
         $out = '';
         foreach ($this->features as $f) {
-            if ($f instanceof Renderable) {
+            if ($f instanceof Renderable && $f->isEnabled()) {
                 $out .= $f->getSettingsHeadJs();
             }
         }
@@ -124,7 +124,7 @@ final class Jump implements Renderable
     public function getEndHeadJs() {
         $out = '';
         foreach ($this->features as $f) {
-            if ($f instanceof Renderable) {
+            if ($f instanceof Renderable && $f->isEnabled()) {
                 $out .= $f->getEndHeadJs();
             }
         }
@@ -137,7 +137,7 @@ final class Jump implements Renderable
     public function getCssHrefs() {
         $out = array();
         foreach ($this->features as $f) {
-            if ($f instanceof Renderable) {
+            if ($f instanceof Renderable && $f->isEnabled()) {
                 $out = array_merge($out, $f->getCssHrefs());
             }
         }
@@ -150,7 +150,7 @@ final class Jump implements Renderable
     public function getCss() {
         $out = '';
         foreach ($this->features as $f) {
-            if ($f instanceof Renderable) {
+            if ($f instanceof Renderable && $f->isEnabled()) {
                 $out .= $f->getCss();
             }
         }
