@@ -5,4 +5,5 @@ php:
   - 5.5
 env:
   - MAGENTODEV=1
+script: vendor/bin/phpunit
 before_script: composer update
