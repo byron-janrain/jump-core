@@ -1,0 +1,7 @@
+{
+"request_id":"ze7eyupk6qf5umek",
+"code":205,
+"error_description":"no authentication provided, for example client_id and client_secret",
+"error":"invalid_auth_method",
+"stat":"error"
+}

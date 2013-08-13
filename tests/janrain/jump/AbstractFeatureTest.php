@@ -31,7 +31,7 @@ class AbstractFeatureTest extends \PHPUnit_Framework_TestCase
      */
     public function testIsEnabled(AbstractFeature $mock)
     {
-        $this->assertEquals(true, $mock->isEnabled());
+        $this->assertFalse($mock->isEnabled());
     }
 
     /**
@@ -41,14 +41,6 @@ class AbstractFeatureTest extends \PHPUnit_Framework_TestCase
     {
         $rc = new \ReflectionClass($mock);
         $this->assertEquals($rc->getShortName(), $mock->getName());
-    }
-
-    /**
-     * @depends testInit
-     */
-    public function testGetStack(AbstractFeature $mock)
-    {
-        $this->assertInstanceOf(__NAMESPACE__ . '\\FeatureStack', $mock->getStack());
     }
 
     /**

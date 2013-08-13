@@ -82,7 +82,8 @@ class JumpTest extends \PHPUnit_Framework_TestCase
                 'jumpUrl' => 'string',
                 'capture.appId' => '',
                 'capture.clientId' => '',
-                'capture.captureServer' => '')
+                'capture.captureServer' => '',
+                'CaptureEnabled' => false)
                 )),
         );
     }

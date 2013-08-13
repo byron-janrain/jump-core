@@ -78,26 +78,6 @@ abstract class AbstractConfig implements \ArrayAccess, \IteratorAggregate
         return implode('', $strings);
     }
 
-    /*
-    protected function flatten($jsonDecoded, $path = '', &$out = array())
-    {
-        $type = gettype($jsonDecoded);
-
-        if ('object' != $type) {
-            $out[$path] = $jsonDecoded;
-        } else {
-            foreach ($jsonDecoded as $k => $v) {
-                $newPath = '';
-                if ('object' == $type) {
-                    $newPath = $path ? "{$path}->{$k}" : $k;
-                }
-                $this->flatten($v, $newPath, $out);
-            }
-        }
-        return $out;
-    }
-    */
-
     /**
     * @todo implement this as a reconstruction base on the values
     */

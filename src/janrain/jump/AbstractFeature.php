@@ -14,7 +14,7 @@ abstract class AbstractFeature
 
     public function isEnabled()
     {
-        return true;
+        return (bool) $this->config->offsetGet("{$this->getName()}Enabled");
     }
 
     public function getName()
@@ -33,7 +33,7 @@ abstract class AbstractFeature
         return $this->config->offsetSet($key, $value);
     }
 
-    public function getStack()
+    protected function getStack()
     {
         return $this->stack;
     }
