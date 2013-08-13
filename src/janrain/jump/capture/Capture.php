@@ -74,7 +74,7 @@ class Capture extends AbstractFeature implements Renderable
                 janrain.events.onCaptureLoginSuccess.addHandler(
                     function (result) {
                         console.log(result);
-                        janrain.plex.do('login', {token:result.accessToken, uuid:result.userData.uuid});
+                        janrain.plex.do('capturelogin', {token:result.accessToken, uuid:result.userData.uuid});
                         janrain.capture.ui.modal.close();
                     });
                 janrain.events.onCaptureLoginFailed.addHandler(
@@ -86,7 +86,7 @@ class Capture extends AbstractFeature implements Renderable
                     function (result) {
                         console.log('Registration Success!');
                         console.log(result);
-                        janrain.plex.do('login', {token:result.accessToken, uuid:result.userData.uuid});
+                        janrain.plex.do('capturelogin', {token:result.accessToken, uuid:result.userData.uuid});
                         janrain.capture.ui.modal.close();
                     });
                 janrain.capture.ui.start();
