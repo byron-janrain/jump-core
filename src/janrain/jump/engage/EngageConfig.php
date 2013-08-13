@@ -8,7 +8,8 @@ use janrain\plex\Config;
 class EngageConfig extends AbstractConfig
 {
 
-    public static $REQUIRED_KEYS = array('tokenUrl', 'appId', 'appUrl', 'loadJsUrl', 'EngageEnabled');
+    public static $REQUIRED_KEYS = array(
+        'tokenUrl', 'appId', 'appUrl', 'loadJsUrl', 'engage.enabled');
 
     public function __construct(Config $data)
     {

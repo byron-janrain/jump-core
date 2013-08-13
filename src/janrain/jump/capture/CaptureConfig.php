@@ -7,7 +7,8 @@ use janrain\plex\Config;
 class CaptureConfig extends AbstractConfig
 {
 
-    public static $REQUIRED_KEYS = array('capture.appId', 'capture.clientId', 'capture.captureServer', 'CaptureEnabled');
+    public static $REQUIRED_KEYS = array(
+        'capture.appId', 'capture.clientId', 'capture.captureServer', 'capture.enabled');
 
     public function __construct(Config $data)
     {

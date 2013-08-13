@@ -83,7 +83,7 @@ class JumpTest extends \PHPUnit_Framework_TestCase
                 'capture.appId' => '',
                 'capture.clientId' => '',
                 'capture.captureServer' => '',
-                'CaptureEnabled' => false)
+                'capture.enabled' => false)
                 )),
         );
     }
