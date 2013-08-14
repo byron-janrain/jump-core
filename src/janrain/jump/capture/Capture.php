@@ -136,7 +136,7 @@ class Capture extends AbstractFeature implements Renderable
     /**
      * @inheritsDoc
      *
-     * Returns 1
+     * Returns 5
      */
     public function getPriority()
     {
