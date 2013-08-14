@@ -8,7 +8,7 @@ class CaptureConfig extends AbstractConfig
 {
 
     public static $REQUIRED_KEYS = array(
-        'capture.appId', 'capture.clientId', 'capture.captureServer', 'capture.enabled');
+        'capture.appId', 'capture.clientId', 'capture.captureServer');
 
     public function __construct(Config $data)
     {
