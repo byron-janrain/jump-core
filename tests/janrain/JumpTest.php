@@ -75,16 +75,23 @@ class JumpTest extends \PHPUnit_Framework_TestCase
 
     public function initGen()
     {
+        $coreConfigFake = array_combine(
+            \janrain\jump\core\CoreConfig::$REQUIRED_KEYS,
+            \janrain\jump\core\CoreConfig::$REQUIRED_KEYS);
+        $captureConfigFake = array_combine(
+            \janrain\jump\capture\CaptureConfig::$REQUIRED_KEYS,
+            \janrain\jump\capture\CaptureConfig::$REQUIRED_KEYS);
+        $captureApiConfigFake = array_combine(
+            \janrain\jump\captureapi\CaptureApiConfig::$REQUIRED_KEYS,
+            \janrain\jump\captureapi\CaptureApiConfig::$REQUIRED_KEYS);
         return array(
             array(new GenericConfig(array('features' => array('Core'), 'jumpUrl' => 'string'))),
             array(new GenericConfig(
-                array('features' => array('Core', 'Capture'),
-                'jumpUrl' => 'string',
-                'capture.appId' => '',
-                'capture.clientId' => '',
-                'capture.captureServer' => '',
-                'capture.enabled' => false)
-                )),
+                array_merge(
+                    array('features' => array('Core','CaptureApi', 'Capture')),
+                    $coreConfigFake,
+                    $captureConfigFake,
+                    $captureApiConfigFake))),
         );
     }
 

@@ -3,15 +3,16 @@ namespace janrain\jump\capture;
 
 use janrain\jump\AbstractFeature;
 use janrain\jump\Renderable;
+use janrain\jump\FeatureStack;
 
 class Capture extends AbstractFeature implements Renderable
 {
-    protected $config;
-    protected $api;
-
-    public function __construct(CaptureConfig $c)
+    public function __construct(CaptureConfig $c, FeatureStack $stack)
     {
-        $this->config = $c;
+        parent::__construct($c, $stack);
+        if (!$stack->getFeature('CaptureApi')) {
+            throw new \Exception('Capture depends on CaptureApi');
+        }
     }
 
     /**
